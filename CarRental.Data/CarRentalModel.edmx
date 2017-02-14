@@ -1,0 +1,728 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CarRentalModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="CarRentalModelStoreContainer">
+    <EntitySet Name="Cars" EntityType="CarRentalModel.Store.Cars" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="People" EntityType="CarRentalModel.Store.People" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Roles" EntityType="CarRentalModel.Store.Roles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PersonRoles" EntityType="CarRentalModel.Store.PersonRoles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CarDetails1" EntityType="CarRentalModel.Store.CarDetails1" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ParkingItems" EntityType="CarRentalModel.Store.ParkingItems" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Rents" EntityType="CarRentalModel.Store.Rents" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RentalDetails" EntityType="CarRentalModel.Store.RentalDetails" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PriceItems" EntityType="CarRentalModel.Store.PriceItems" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AuthInfoes" EntityType="CarRentalModel.Store.AuthInfoes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="People_Customer" EntityType="CarRentalModel.Store.People_Customer" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="People_Employee" EntityType="CarRentalModel.Store.People_Employee" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="CustomerRent" Association="CarRentalModel.Store.CustomerRent">
+      <End Role="Customer" EntitySet="People_Customer" />
+      <End Role="Rent" EntitySet="Rents" />
+    </AssociationSet>
+    <AssociationSet Name="EmployeeRent" Association="CarRentalModel.Store.EmployeeRent">
+      <End Role="Employee" EntitySet="People_Employee" />
+      <End Role="Rent" EntitySet="Rents" />
+    </AssociationSet>
+    <AssociationSet Name="RentRentalDetails" Association="CarRentalModel.Store.RentRentalDetails">
+      <End Role="Rent" EntitySet="Rents" />
+      <End Role="RentalDetails" EntitySet="RentalDetails" />
+    </AssociationSet>
+    <AssociationSet Name="RolePersonRole" Association="CarRentalModel.Store.RolePersonRole">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="PersonRole" EntitySet="PersonRoles" />
+    </AssociationSet>
+    <AssociationSet Name="CarCarDetails" Association="CarRentalModel.Store.CarCarDetails">
+      <End Role="Car" EntitySet="Cars" />
+      <End Role="CarDetails" EntitySet="CarDetails1" />
+    </AssociationSet>
+    <AssociationSet Name="CarRentalDetails" Association="CarRentalModel.Store.CarRentalDetails">
+      <End Role="Car" EntitySet="Cars" />
+      <End Role="RentalDetails" EntitySet="RentalDetails" />
+    </AssociationSet>
+    <AssociationSet Name="CarParking" Association="CarRentalModel.Store.CarParking">
+      <End Role="Car" EntitySet="Cars" />
+      <End Role="Parking" EntitySet="ParkingItems" />
+    </AssociationSet>
+    <AssociationSet Name="CarPriceItem" Association="CarRentalModel.Store.CarPriceItem">
+      <End Role="Car" EntitySet="Cars" />
+      <End Role="PriceItem" EntitySet="PriceItems" />
+    </AssociationSet>
+    <AssociationSet Name="AuthInfoPersonRole" Association="CarRentalModel.Store.AuthInfoPersonRole">
+      <End Role="AuthInfo" EntitySet="AuthInfoes" />
+      <End Role="PersonRole" EntitySet="PersonRoles" />
+    </AssociationSet>
+    <AssociationSet Name="PersonAuthInfo" Association="CarRentalModel.Store.PersonAuthInfo">
+      <End Role="Person" EntitySet="People" />
+      <End Role="AuthInfo" EntitySet="AuthInfoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Customer_inherits_Person" Association="CarRentalModel.Store.FK_Customer_inherits_Person">
+      <End Role="Person" EntitySet="People" />
+      <End Role="Customer" EntitySet="People_Customer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_inherits_Person" Association="CarRentalModel.Store.FK_Employee_inherits_Person">
+      <End Role="Person" EntitySet="People" />
+      <End Role="Employee" EntitySet="People_Employee" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Cars">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CarDetails_Id" Type="int" Nullable="false" />
+    <Property Name="ParkingItem_Id" Type="int" Nullable="false" />
+    <Property Name="PriceItem_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="People">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirsName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Phone" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Address" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="AuthInfo_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PersonRoles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Role_Id" Type="int" Nullable="false" />
+    <Property Name="AuthInfo_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CarDetails1">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Color" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ParkingItems">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Qty" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Rents">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerId" Type="int" Nullable="false" />
+    <Property Name="EmployeeId" Type="int" Nullable="false" />
+    <Property Name="DateRental" Type="datetime" Nullable="false" />
+    <Property Name="Customer_Id" Type="int" Nullable="false" />
+    <Property Name="Employee_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RentalDetails">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Lease" Type="time" Nullable="false" />
+    <Property Name="LineItem" Type="int" Nullable="false" />
+    <Property Name="Qty" Type="int" Nullable="false" />
+    <Property Name="Rent_Id" Type="int" Nullable="false" />
+    <Property Name="Car_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PriceItems">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Price" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AuthInfoes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="PasswordHash" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="People_Customer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="People_Employee">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Salary" Type="float" Nullable="true" />
+    <Property Name="BirthDate" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="CustomerRent">
+    <End Role="Customer" Type="CarRentalModel.Store.People_Customer" Multiplicity="1" />
+    <End Role="Rent" Type="CarRentalModel.Store.Rents" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Rent">
+        <PropertyRef Name="Customer_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="EmployeeRent">
+    <End Role="Employee" Type="CarRentalModel.Store.People_Employee" Multiplicity="1" />
+    <End Role="Rent" Type="CarRentalModel.Store.Rents" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Rent">
+        <PropertyRef Name="Employee_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RentRentalDetails">
+    <End Role="Rent" Type="CarRentalModel.Store.Rents" Multiplicity="1" />
+    <End Role="RentalDetails" Type="CarRentalModel.Store.RentalDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rent">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RentalDetails">
+        <PropertyRef Name="Rent_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RolePersonRole">
+    <End Role="Role" Type="CarRentalModel.Store.Roles" Multiplicity="1" />
+    <End Role="PersonRole" Type="CarRentalModel.Store.PersonRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PersonRole">
+        <PropertyRef Name="Role_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CarCarDetails">
+    <End Role="Car" Type="CarRentalModel.Store.Cars" Multiplicity="*" />
+    <End Role="CarDetails" Type="CarRentalModel.Store.CarDetails1" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="CarDetails">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Car">
+        <PropertyRef Name="CarDetails_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CarRentalDetails">
+    <End Role="Car" Type="CarRentalModel.Store.Cars" Multiplicity="1" />
+    <End Role="RentalDetails" Type="CarRentalModel.Store.RentalDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Car">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RentalDetails">
+        <PropertyRef Name="Car_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CarParking">
+    <End Role="Car" Type="CarRentalModel.Store.Cars" Multiplicity="*" />
+    <End Role="Parking" Type="CarRentalModel.Store.ParkingItems" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Parking">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Car">
+        <PropertyRef Name="ParkingItem_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CarPriceItem">
+    <End Role="Car" Type="CarRentalModel.Store.Cars" Multiplicity="*" />
+    <End Role="PriceItem" Type="CarRentalModel.Store.PriceItems" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="PriceItem">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Car">
+        <PropertyRef Name="PriceItem_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AuthInfoPersonRole">
+    <End Role="AuthInfo" Type="CarRentalModel.Store.AuthInfoes" Multiplicity="1" />
+    <End Role="PersonRole" Type="CarRentalModel.Store.PersonRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AuthInfo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PersonRole">
+        <PropertyRef Name="AuthInfo_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PersonAuthInfo">
+    <End Role="Person" Type="CarRentalModel.Store.People" Multiplicity="*" />
+    <End Role="AuthInfo" Type="CarRentalModel.Store.AuthInfoes" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="AuthInfo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Person">
+        <PropertyRef Name="AuthInfo_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Customer_inherits_Person">
+    <End Role="Person" Type="CarRentalModel.Store.People" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Customer" Type="CarRentalModel.Store.People_Customer" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Customer">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_inherits_Person">
+    <End Role="Person" Type="CarRentalModel.Store.People" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Employee" Type="CarRentalModel.Store.People_Employee" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="CarRentalModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="CarRentalModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cars" EntityType="CarRentalModel.Car" />
+          <EntitySet Name="People" EntityType="CarRentalModel.Person" />
+          <EntitySet Name="Roles" EntityType="CarRentalModel.Role" />
+          <EntitySet Name="PersonRoles" EntityType="CarRentalModel.PersonRole" />
+          <EntitySet Name="CarDetails1" EntityType="CarRentalModel.CarDetails" />
+          <EntitySet Name="ParkingItems" EntityType="CarRentalModel.ParkingItem" />
+          <EntitySet Name="Rents" EntityType="CarRentalModel.Rent" />
+          <EntitySet Name="RentalDetails" EntityType="CarRentalModel.RentalDetails" />
+          <AssociationSet Name="CustomerRent" Association="CarRentalModel.CustomerRent">
+            <End Role="Customer" EntitySet="People" />
+            <End Role="Rent" EntitySet="Rents" />
+          </AssociationSet>
+          <AssociationSet Name="EmployeeRent" Association="CarRentalModel.EmployeeRent">
+            <End Role="Employee" EntitySet="People" />
+            <End Role="Rent" EntitySet="Rents" />
+          </AssociationSet>
+          <AssociationSet Name="RentRentalDetails" Association="CarRentalModel.RentRentalDetails">
+            <End Role="Rent" EntitySet="Rents" />
+            <End Role="RentalDetails" EntitySet="RentalDetails" />
+          </AssociationSet>
+          <AssociationSet Name="RolePersonRole" Association="CarRentalModel.RolePersonRole">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="PersonRole" EntitySet="PersonRoles" />
+          </AssociationSet>
+          <AssociationSet Name="CarCarDetails" Association="CarRentalModel.CarCarDetails">
+            <End Role="Car" EntitySet="Cars" />
+            <End Role="CarDetails" EntitySet="CarDetails1" />
+          </AssociationSet>
+          <AssociationSet Name="CarRentalDetails" Association="CarRentalModel.CarRentalDetails">
+            <End Role="Car" EntitySet="Cars" />
+            <End Role="RentalDetails" EntitySet="RentalDetails" />
+          </AssociationSet>
+          <AssociationSet Name="CarParking" Association="CarRentalModel.CarParking">
+            <End Role="Car" EntitySet="Cars" />
+            <End Role="Parking" EntitySet="ParkingItems" />
+          </AssociationSet>
+          <EntitySet Name="PriceItems" EntityType="CarRentalModel.PriceItem" />
+          <AssociationSet Name="CarPriceItem" Association="CarRentalModel.CarPriceItem">
+            <End Role="Car" EntitySet="Cars" />
+            <End Role="PriceItem" EntitySet="PriceItems" />
+          </AssociationSet>
+          <EntitySet Name="AuthInfoes" EntityType="CarRentalModel.AuthInfo" />
+          <AssociationSet Name="AuthInfoPersonRole" Association="CarRentalModel.AuthInfoPersonRole">
+            <End Role="AuthInfo" EntitySet="AuthInfoes" />
+            <End Role="PersonRole" EntitySet="PersonRoles" />
+          </AssociationSet>
+          <AssociationSet Name="PersonAuthInfo" Association="CarRentalModel.PersonAuthInfo">
+            <End Role="Person" EntitySet="People" />
+            <End Role="AuthInfo" EntitySet="AuthInfoes" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Car">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="CarDetails" Relationship="CarRentalModel.CarCarDetails" FromRole="Car" ToRole="CarDetails" />
+          <NavigationProperty Name="RentalDetails" Relationship="CarRentalModel.CarRentalDetails" FromRole="Car" ToRole="RentalDetails" />
+          <NavigationProperty Name="ParkingItem" Relationship="CarRentalModel.CarParking" FromRole="Car" ToRole="Parking" />
+          <NavigationProperty Name="PriceItem" Relationship="CarRentalModel.CarPriceItem" FromRole="Car" ToRole="PriceItem" />
+        </EntityType>
+        <EntityType Name="Person" Abstract="true">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirsName" Type="String" Nullable="false" />
+          <Property Name="LastName" Type="String" Nullable="false" />
+          <Property Name="Phone" Type="String" Nullable="true" />
+          <Property Name="Address" Type="String" Nullable="true" />
+          <NavigationProperty Name="AuthInfo" Relationship="CarRentalModel.PersonAuthInfo" FromRole="Person" ToRole="AuthInfo" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="PersonRoles" Relationship="CarRentalModel.RolePersonRole" FromRole="Role" ToRole="PersonRole" />
+        </EntityType>
+        <EntityType Name="PersonRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Role" Relationship="CarRentalModel.RolePersonRole" FromRole="PersonRole" ToRole="Role" />
+          <NavigationProperty Name="AuthInfo" Relationship="CarRentalModel.AuthInfoPersonRole" FromRole="PersonRole" ToRole="AuthInfo" />
+        </EntityType>
+        <EntityType Name="CarDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Color" Type="String" Nullable="false" />
+          <NavigationProperty Name="Car" Relationship="CarRentalModel.CarCarDetails" FromRole="CarDetails" ToRole="Car" />
+        </EntityType>
+        <EntityType Name="ParkingItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Qty" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Car" Relationship="CarRentalModel.CarParking" FromRole="Parking" ToRole="Car" />
+        </EntityType>
+        <EntityType Name="Rent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="DateRental" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="CarRentalModel.CustomerRent" FromRole="Rent" ToRole="Customer" />
+          <NavigationProperty Name="Employee" Relationship="CarRentalModel.EmployeeRent" FromRole="Rent" ToRole="Employee" />
+          <NavigationProperty Name="RentalDetails" Relationship="CarRentalModel.RentRentalDetails" FromRole="Rent" ToRole="RentalDetails" />
+        </EntityType>
+        <EntityType Name="RentalDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Lease" Type="Time" Nullable="false" />
+          <NavigationProperty Name="Rent" Relationship="CarRentalModel.RentRentalDetails" FromRole="RentalDetails" ToRole="Rent" />
+          <Property Name="LineItem" Type="Int32" Nullable="false" />
+          <Property Name="Qty" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Car" Relationship="CarRentalModel.CarRentalDetails" FromRole="RentalDetails" ToRole="Car" />
+        </EntityType>
+        <EntityType Name="Customer" BaseType="CarRentalModel.Person">
+          <NavigationProperty Name="Rents" Relationship="CarRentalModel.CustomerRent" FromRole="Customer" ToRole="Rent" />
+        </EntityType>
+        <EntityType Name="Employee" BaseType="CarRentalModel.Person">
+          <Property Name="Salary" Nullable="true" Type="Double" />
+          <Property Name="BirthDate" Type="DateTime" Nullable="true" />
+          <NavigationProperty Name="Rents" Relationship="CarRentalModel.EmployeeRent" FromRole="Employee" ToRole="Rent" />
+        </EntityType>
+        <Association Name="CustomerRent">
+          <End Type="CarRentalModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="CarRentalModel.Rent" Role="Rent" Multiplicity="*" />
+        </Association>
+        <Association Name="EmployeeRent">
+          <End Type="CarRentalModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="CarRentalModel.Rent" Role="Rent" Multiplicity="*" />
+        </Association>
+        <Association Name="RentRentalDetails">
+          <End Type="CarRentalModel.Rent" Role="Rent" Multiplicity="1" />
+          <End Type="CarRentalModel.RentalDetails" Role="RentalDetails" Multiplicity="*" />
+        </Association>
+        <Association Name="RolePersonRole">
+          <End Type="CarRentalModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="CarRentalModel.PersonRole" Role="PersonRole" Multiplicity="*" />
+        </Association>
+        <Association Name="CarCarDetails">
+          <End Type="CarRentalModel.Car" Role="Car" Multiplicity="1" />
+          <End Type="CarRentalModel.CarDetails" Role="CarDetails" Multiplicity="1" />
+        </Association>
+        <Association Name="CarRentalDetails">
+          <End Type="CarRentalModel.Car" Role="Car" Multiplicity="1" />
+          <End Type="CarRentalModel.RentalDetails" Role="RentalDetails" Multiplicity="*" />
+        </Association>
+        <Association Name="CarParking">
+          <End Type="CarRentalModel.Car" Role="Car" Multiplicity="1" />
+          <End Type="CarRentalModel.ParkingItem" Role="Parking" Multiplicity="1" />
+        </Association>
+        <EntityType Name="PriceItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Price" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Car" Relationship="CarRentalModel.CarPriceItem" FromRole="PriceItem" ToRole="Car" />
+        </EntityType>
+        <Association Name="CarPriceItem">
+          <End Type="CarRentalModel.Car" Role="Car" Multiplicity="1" />
+          <End Type="CarRentalModel.PriceItem" Role="PriceItem" Multiplicity="1" />
+        </Association>
+        <EntityType Name="AuthInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" Nullable="false" />
+          <Property Name="Email" Type="String" Nullable="true" />
+          <Property Name="PasswordHash" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PersonRoles" Relationship="CarRentalModel.AuthInfoPersonRole" FromRole="AuthInfo" ToRole="PersonRole" />
+          <NavigationProperty Name="Person" Relationship="CarRentalModel.PersonAuthInfo" FromRole="AuthInfo" ToRole="Person" />
+        </EntityType>
+        <Association Name="AuthInfoPersonRole">
+          <End Type="CarRentalModel.AuthInfo" Role="AuthInfo" Multiplicity="1" />
+          <End Type="CarRentalModel.PersonRole" Role="PersonRole" Multiplicity="*" />
+        </Association>
+        <Association Name="PersonAuthInfo">
+          <End Type="CarRentalModel.Person" Role="Person" Multiplicity="1" />
+          <End Type="CarRentalModel.AuthInfo" Role="AuthInfo" Multiplicity="1" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CarRentalModelStoreContainer" CdmEntityContainer="CarRentalModelContainer">
+    <EntitySetMapping Name="Cars">
+      <EntityTypeMapping TypeName="IsTypeOf(CarRentalModel.Car)">
+        <MappingFragment StoreEntitySet="Cars">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="People">
+      <EntityTypeMapping TypeName="IsTypeOf(CarRentalModel.Person)">
+        <MappingFragment StoreEntitySet="People">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FirsName" ColumnName="FirsName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(CarRentalModel.Customer)">
+        <MappingFragment StoreEntitySet="People_Customer">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(CarRentalModel.Employee)">
+        <MappingFragment StoreEntitySet="People_Employee">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Salary" ColumnName="Salary" />
+          <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="IsTypeOf(CarRentalModel.Role)">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PersonRoles">
+      <EntityTypeMapping TypeName="IsTypeOf(CarRentalModel.PersonRole)">
+        <MappingFragment StoreEntitySet="PersonRoles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CarDetails1">
+      <EntityTypeMapping TypeName="IsTypeOf(CarRentalModel.CarDetails)">
+        <MappingFragment StoreEntitySet="CarDetails1">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Color" ColumnName="Color" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ParkingItems">
+      <EntityTypeMapping TypeName="IsTypeOf(CarRentalModel.ParkingItem)">
+        <MappingFragment StoreEntitySet="ParkingItems">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Rents">
+      <EntityTypeMapping TypeName="IsTypeOf(CarRentalModel.Rent)">
+        <MappingFragment StoreEntitySet="Rents">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="DateRental" ColumnName="DateRental" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RentalDetails">
+      <EntityTypeMapping TypeName="IsTypeOf(CarRentalModel.RentalDetails)">
+        <MappingFragment StoreEntitySet="RentalDetails">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Lease" ColumnName="Lease" />
+          <ScalarProperty Name="LineItem" ColumnName="LineItem" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PriceItems">
+      <EntityTypeMapping TypeName="IsTypeOf(CarRentalModel.PriceItem)">
+        <MappingFragment StoreEntitySet="PriceItems">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AuthInfoes">
+      <EntityTypeMapping TypeName="IsTypeOf(CarRentalModel.AuthInfo)">
+        <MappingFragment StoreEntitySet="AuthInfoes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="CustomerRent" TypeName="CarRentalModel.CustomerRent" StoreEntitySet="Rents">
+      <EndProperty Name="Customer">
+        <ScalarProperty Name="Id" ColumnName="Customer_Id" />
+      </EndProperty>
+      <EndProperty Name="Rent">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="EmployeeRent" TypeName="CarRentalModel.EmployeeRent" StoreEntitySet="Rents">
+      <EndProperty Name="Employee">
+        <ScalarProperty Name="Id" ColumnName="Employee_Id" />
+      </EndProperty>
+      <EndProperty Name="Rent">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="RentRentalDetails" TypeName="CarRentalModel.RentRentalDetails" StoreEntitySet="RentalDetails">
+      <EndProperty Name="Rent">
+        <ScalarProperty Name="Id" ColumnName="Rent_Id" />
+      </EndProperty>
+      <EndProperty Name="RentalDetails">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="RolePersonRole" TypeName="CarRentalModel.RolePersonRole" StoreEntitySet="PersonRoles">
+      <EndProperty Name="Role">
+        <ScalarProperty Name="Id" ColumnName="Role_Id" />
+      </EndProperty>
+      <EndProperty Name="PersonRole">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CarCarDetails" TypeName="CarRentalModel.CarCarDetails" StoreEntitySet="Cars">
+      <EndProperty Name="CarDetails">
+        <ScalarProperty Name="Id" ColumnName="CarDetails_Id" />
+      </EndProperty>
+      <EndProperty Name="Car">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CarRentalDetails" TypeName="CarRentalModel.CarRentalDetails" StoreEntitySet="RentalDetails">
+      <EndProperty Name="Car">
+        <ScalarProperty Name="Id" ColumnName="Car_Id" />
+      </EndProperty>
+      <EndProperty Name="RentalDetails">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CarParking" TypeName="CarRentalModel.CarParking" StoreEntitySet="Cars">
+      <EndProperty Name="Parking">
+        <ScalarProperty Name="Id" ColumnName="ParkingItem_Id" />
+      </EndProperty>
+      <EndProperty Name="Car">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CarPriceItem" TypeName="CarRentalModel.CarPriceItem" StoreEntitySet="Cars">
+      <EndProperty Name="PriceItem">
+        <ScalarProperty Name="Id" ColumnName="PriceItem_Id" />
+      </EndProperty>
+      <EndProperty Name="Car">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="AuthInfoPersonRole" TypeName="CarRentalModel.AuthInfoPersonRole" StoreEntitySet="PersonRoles">
+      <EndProperty Name="AuthInfo">
+        <ScalarProperty Name="Id" ColumnName="AuthInfo_Id" />
+      </EndProperty>
+      <EndProperty Name="PersonRole">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="PersonAuthInfo" TypeName="CarRentalModel.PersonAuthInfo" StoreEntitySet="People">
+      <EndProperty Name="AuthInfo">
+        <ScalarProperty Name="Id" ColumnName="AuthInfo_Id" />
+      </EndProperty>
+      <EndProperty Name="Person">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
