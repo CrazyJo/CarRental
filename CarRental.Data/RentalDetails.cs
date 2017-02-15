@@ -16,8 +16,6 @@ namespace CarRental.Data
     {
         public int Id { get; set; }
         public System.TimeSpan Lease { get; set; }
-        public int LineItem { get; set; }
-        public int Qty { get; set; }
     
         public virtual Rent Rent { get; set; }
         public virtual Car Car { get; set; }

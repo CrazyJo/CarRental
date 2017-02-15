@@ -60,16 +60,6 @@
     <Compile Include="CarDetails.cs">
       <DependentUpon>CarRentalModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="CarRental.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CarRental.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CarRental.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CarRental.tt</DependentUpon>
-    </Compile>
     <Compile Include="CarRentalModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -129,16 +119,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CarRental.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CarRental.Context.cs</LastGenOutput>
-      <DependentUpon>CarRentalModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="CarRental.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CarRental.cs</LastGenOutput>
-      <DependentUpon>CarRentalModel.edmx</DependentUpon>
-    </Content>
     <Content Include="CarRentalModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CarRentalModel.Context.cs</LastGenOutput>

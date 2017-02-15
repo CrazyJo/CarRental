@@ -15,7 +15,8 @@ namespace CarRental.Data
     public partial class ParkingItem
     {
         public int Id { get; set; }
-        public int Qty { get; set; }
+        public int TotalCars { get; set; }
+        public int Balance { get; set; }
     
         public virtual Car Car { get; set; }
     }

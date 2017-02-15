@@ -424,8 +424,9 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Qty" Type="Int32" Nullable="false" />
+          <Property Name="TotalCars" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Car" Relationship="CarRentalModel.CarParking" FromRole="Parking" ToRole="Car" />
+          <Property Name="Balance" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Rent">
           <Key>
@@ -446,8 +447,6 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Lease" Type="Time" Nullable="false" />
           <NavigationProperty Name="Rent" Relationship="CarRentalModel.RentRentalDetails" FromRole="RentalDetails" ToRole="Rent" />
-          <Property Name="LineItem" Type="Int32" Nullable="false" />
-          <Property Name="Qty" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Car" Relationship="CarRentalModel.CarRentalDetails" FromRole="RentalDetails" ToRole="Car" />
         </EntityType>
         <EntityType Name="Customer" BaseType="CarRentalModel.Person">
@@ -491,7 +490,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Price" Type="Double" Nullable="false" />
+          <Property Name="PricePerHour" Type="Double" Nullable="false" />
           <NavigationProperty Name="Car" Relationship="CarRentalModel.CarPriceItem" FromRole="PriceItem" ToRole="Car" />
         </EntityType>
         <Association Name="CarPriceItem">
@@ -581,7 +580,7 @@
       <EntityTypeMapping TypeName="IsTypeOf(CarRentalModel.ParkingItem)">
         <MappingFragment StoreEntitySet="ParkingItems">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="TotalCars" ColumnName="Qty" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -600,8 +599,6 @@
         <MappingFragment StoreEntitySet="RentalDetails">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Lease" ColumnName="Lease" />
-          <ScalarProperty Name="LineItem" ColumnName="LineItem" />
-          <ScalarProperty Name="Qty" ColumnName="Qty" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -609,7 +606,7 @@
       <EntityTypeMapping TypeName="IsTypeOf(CarRentalModel.PriceItem)">
         <MappingFragment StoreEntitySet="PriceItems">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="PricePerHour" ColumnName="Price" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
