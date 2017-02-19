@@ -23,7 +23,7 @@ namespace CarRental.View.Infra
 
         protected override IEnumerable<CarInfo> GetDomainModel()
         {
-            return CarService.GetCarsInfo();
+            return CarService.GetAllAvailableCars();
         }
     }
 }

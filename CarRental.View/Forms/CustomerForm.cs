@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -28,7 +29,10 @@ namespace CarRental.View.Forms
             CarService = carService;
             RentalService = rentalService;
 
-            CarsProvider = new CarsInfoProvider(carService, dataGridView);
+            CarsProvider = new CarsInfoProvider(carService, dataGridView)
+            {
+                ExcludeColumns = {"Id", "Balance", "TotalCars"}
+            };
             OrdersProvider = new OrdersProvider(user, RentalService, dataGridView);
         }
 

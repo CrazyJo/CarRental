@@ -14,10 +14,12 @@ namespace CarRental.View.Infra
 
         public bool DomainModelEmpty { get; set; }
         public DataGridView DataGridView { get; set; }
+        public List<string> ExcludeColumns { get; set; }
 
         protected GridValueProvider(DataGridView dataGridView)
         {
             DataGridView = dataGridView;
+            ExcludeColumns = new List<string>();
         }
 
         public void SetData()
@@ -38,9 +40,11 @@ namespace CarRental.View.Infra
 
         protected virtual void Format()
         {
-            var key = "id";
-            var column = DataGridView.Columns[key];
-            if (column != null) column.Visible = false;
+            foreach (var excludeColumn in ExcludeColumns)
+            {
+                var column = DataGridView.Columns[excludeColumn];
+                if (column != null) column.Visible = false;
+            }
         }
 
         protected abstract IEnumerable<TViewModel> Convert(IEnumerable<TDomainModel> domainModel);

@@ -4,9 +4,9 @@ using CarRental.Services.Entities;
 
 namespace CarRental.View.Forms
 {
-    public partial class RentalManagerForm : Form
+    public partial class ManagerForm : Form
     {
-        public RentalManagerForm(User user, RentalService rentalService, CarService carService, UserService userService)
+        public ManagerForm(User user, RentalService rentalService, CarService carService, UserService userService)
         {
             InitializeComponent();
         }

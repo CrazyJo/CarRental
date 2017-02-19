@@ -9,7 +9,7 @@ namespace CarRental.Services
 {
     public class CarService
     {
-        public IEnumerable<CarInfo> GetCarsInfo()
+        public IEnumerable<CarInfo> GetAllAvailableCars()
         {
             return new List<CarInfo>
             {
@@ -28,7 +28,13 @@ namespace CarRental.Services
                     PricePerHour = 70.15
                 }
             };
-
         }
+
+        public IEnumerable<CarInfo> GetAllCars()
+        {
+            throw new NotImplementedException();
+        }
+
+
     }
 }
