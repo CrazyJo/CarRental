@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarRental.Services.Entities
+namespace CarRental.Services.Infra
 {
-    public class CustomerDTO : User
+    public enum Role
     {
+        Customer,
+        RentalManager
     }
 }

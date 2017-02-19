@@ -7,12 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CarRental.Services.Entities;
 
 namespace CarRental.View
 {
-    public partial class Form1 : Form
+    public partial class LoginForm : Form
     {
-        public Form1()
+        public AuthResult AuthResult { get; set; }
+
+        public LoginForm()
         {
             InitializeComponent();
         }

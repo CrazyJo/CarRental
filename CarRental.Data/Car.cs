@@ -17,15 +17,15 @@ namespace CarRental.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Car()
         {
-            this.RentalDetails = new HashSet<RentalDetails>();
+            this.RentalDetails = new HashSet<RentalDetail>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
     
-        public virtual CarDetails CarDetails { get; set; }
+        public virtual CarDetail CarDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RentalDetails> RentalDetails { get; set; }
+        public virtual ICollection<RentalDetail> RentalDetails { get; set; }
         public virtual ParkingItem ParkingItem { get; set; }
         public virtual PriceItem PriceItem { get; set; }
     }

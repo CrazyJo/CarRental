@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace CarRental.Services.Entities
 {
-    public class CustomerDTO : User
+    public interface IEntity
     {
+        int Id { get; set; }
     }
 }

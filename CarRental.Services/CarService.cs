@@ -11,10 +11,24 @@ namespace CarRental.Services
     {
         public IEnumerable<CarInfo> GetCarsInfo()
         {
-            throw new NotImplementedException();
+            return new List<CarInfo>
+            {
+                new CarInfo
+                {
+                    Balance = 2,
+                    Car = new CarDTO {Color = "Red", Id = 8, Name = "Mercedes"},
+                    TotalCars = 5,
+                    PricePerHour = 50.7
+                },
+                new CarInfo
+                {
+                    Balance = 1,
+                    Car = new CarDTO {Color = "Blue", Id = 9, Name = "Opel"},
+                    TotalCars = 3,
+                    PricePerHour = 70.15
+                }
+            };
 
         }
-
-
     }
 }

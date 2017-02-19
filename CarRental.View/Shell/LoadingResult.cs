@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarRental.Services.Entities
+namespace CarRental.View.Shell
 {
-    public class CustomerDTO : User
+    public class LoadingResult
     {
+
     }
 }

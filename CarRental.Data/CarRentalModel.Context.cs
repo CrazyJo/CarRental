@@ -29,11 +29,11 @@ namespace CarRental.Data
         public virtual DbSet<Person> People { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<PersonRole> PersonRoles { get; set; }
-        public virtual DbSet<CarDetails> CarDetails1 { get; set; }
-        public virtual DbSet<ParkingItem> ParkingItems { get; set; }
+        public virtual DbSet<CarDetail> CarDetails { get; set; }
+        public virtual DbSet<ParkingItem> Parking { get; set; }
         public virtual DbSet<Rent> Rents { get; set; }
-        public virtual DbSet<RentalDetails> RentalDetails { get; set; }
-        public virtual DbSet<PriceItem> PriceItems { get; set; }
+        public virtual DbSet<RentalDetail> RentalDetails { get; set; }
+        public virtual DbSet<PriceItem> PriceList { get; set; }
         public virtual DbSet<AuthInfo> AuthInfoes { get; set; }
     }
 }

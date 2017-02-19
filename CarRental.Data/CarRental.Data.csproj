@@ -11,6 +11,7 @@
     <AssemblyName>CarRental.Data</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -57,7 +58,7 @@
     <Compile Include="Car.cs">
       <DependentUpon>CarRentalModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="CarDetails.cs">
+    <Compile Include="CarDetail.cs">
       <DependentUpon>CarRentalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="CarRentalModel.Context.cs">
@@ -75,12 +76,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CarRentalModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Customer.cs">
-      <DependentUpon>CarRentalModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Employee.cs">
-      <DependentUpon>CarRentalModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="ParkingItem.cs">
       <DependentUpon>CarRentalModel.tt</DependentUpon>
     </Compile>
@@ -97,7 +92,7 @@
     <Compile Include="Rent.cs">
       <DependentUpon>CarRentalModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="RentalDetails.cs">
+    <Compile Include="RentalDetail.cs">
       <DependentUpon>CarRentalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Role.cs">

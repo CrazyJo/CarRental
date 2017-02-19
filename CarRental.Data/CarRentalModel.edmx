@@ -16,16 +16,6 @@
     <EntitySet Name="RentalDetails" EntityType="CarRentalModel.Store.RentalDetails" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PriceItems" EntityType="CarRentalModel.Store.PriceItems" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AuthInfoes" EntityType="CarRentalModel.Store.AuthInfoes" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="People_Customer" EntityType="CarRentalModel.Store.People_Customer" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="People_Employee" EntityType="CarRentalModel.Store.People_Employee" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="CustomerRent" Association="CarRentalModel.Store.CustomerRent">
-      <End Role="Customer" EntitySet="People_Customer" />
-      <End Role="Rent" EntitySet="Rents" />
-    </AssociationSet>
-    <AssociationSet Name="EmployeeRent" Association="CarRentalModel.Store.EmployeeRent">
-      <End Role="Employee" EntitySet="People_Employee" />
-      <End Role="Rent" EntitySet="Rents" />
-    </AssociationSet>
     <AssociationSet Name="RentRentalDetails" Association="CarRentalModel.Store.RentRentalDetails">
       <End Role="Rent" EntitySet="Rents" />
       <End Role="RentalDetails" EntitySet="RentalDetails" />
@@ -57,14 +47,6 @@
     <AssociationSet Name="PersonAuthInfo" Association="CarRentalModel.Store.PersonAuthInfo">
       <End Role="Person" EntitySet="People" />
       <End Role="AuthInfo" EntitySet="AuthInfoes" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Customer_inherits_Person" Association="CarRentalModel.Store.FK_Customer_inherits_Person">
-      <End Role="Person" EntitySet="People" />
-      <End Role="Customer" EntitySet="People_Customer" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Employee_inherits_Person" Association="CarRentalModel.Store.FK_Employee_inherits_Person">
-      <End Role="Person" EntitySet="People" />
-      <End Role="Employee" EntitySet="People_Employee" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Cars">
@@ -155,44 +137,6 @@
     <Property Name="Email" Type="nvarchar(max)" Nullable="true" />
     <Property Name="PasswordHash" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="People_Customer">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="People_Employee">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Salary" Type="float" Nullable="true" />
-    <Property Name="BirthDate" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="Id" Type="int" Nullable="false" />
-  </EntityType>
-  <Association Name="CustomerRent">
-    <End Role="Customer" Type="CarRentalModel.Store.People_Customer" Multiplicity="1" />
-    <End Role="Rent" Type="CarRentalModel.Store.Rents" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Customer">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Rent">
-        <PropertyRef Name="Customer_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="EmployeeRent">
-    <End Role="Employee" Type="CarRentalModel.Store.People_Employee" Multiplicity="1" />
-    <End Role="Rent" Type="CarRentalModel.Store.Rents" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Employee">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Rent">
-        <PropertyRef Name="Employee_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="RentRentalDetails">
     <End Role="Rent" Type="CarRentalModel.Store.Rents" Multiplicity="1" />
     <End Role="RentalDetails" Type="CarRentalModel.Store.RentalDetails" Multiplicity="*" />
@@ -289,34 +233,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Customer_inherits_Person">
-    <End Role="Person" Type="CarRentalModel.Store.People" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="Customer" Type="CarRentalModel.Store.People_Customer" Multiplicity="0..1" />
-    <ReferentialConstraint>
-      <Principal Role="Person">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Customer">
-        <PropertyRef Name="Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Employee_inherits_Person">
-    <End Role="Person" Type="CarRentalModel.Store.People" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="Employee" Type="CarRentalModel.Store.People_Employee" Multiplicity="0..1" />
-    <ReferentialConstraint>
-      <Principal Role="Person">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Employee">
-        <PropertyRef Name="Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -326,18 +242,10 @@
           <EntitySet Name="People" EntityType="CarRentalModel.Person" />
           <EntitySet Name="Roles" EntityType="CarRentalModel.Role" />
           <EntitySet Name="PersonRoles" EntityType="CarRentalModel.PersonRole" />
-          <EntitySet Name="CarDetails1" EntityType="CarRentalModel.CarDetails" />
-          <EntitySet Name="ParkingItems" EntityType="CarRentalModel.ParkingItem" />
+          <EntitySet Name="CarDetails" EntityType="CarRentalModel.CarDetail" />
+          <EntitySet Name="Parking" EntityType="CarRentalModel.ParkingItem" />
           <EntitySet Name="Rents" EntityType="CarRentalModel.Rent" />
-          <EntitySet Name="RentalDetails" EntityType="CarRentalModel.RentalDetails" />
-          <AssociationSet Name="CustomerRent" Association="CarRentalModel.CustomerRent">
-            <End Role="Customer" EntitySet="People" />
-            <End Role="Rent" EntitySet="Rents" />
-          </AssociationSet>
-          <AssociationSet Name="EmployeeRent" Association="CarRentalModel.EmployeeRent">
-            <End Role="Employee" EntitySet="People" />
-            <End Role="Rent" EntitySet="Rents" />
-          </AssociationSet>
+          <EntitySet Name="RentalDetails" EntityType="CarRentalModel.RentalDetail" />
           <AssociationSet Name="RentRentalDetails" Association="CarRentalModel.RentRentalDetails">
             <End Role="Rent" EntitySet="Rents" />
             <End Role="RentalDetails" EntitySet="RentalDetails" />
@@ -348,7 +256,7 @@
           </AssociationSet>
           <AssociationSet Name="CarCarDetails" Association="CarRentalModel.CarCarDetails">
             <End Role="Car" EntitySet="Cars" />
-            <End Role="CarDetails" EntitySet="CarDetails1" />
+            <End Role="CarDetails" EntitySet="CarDetails" />
           </AssociationSet>
           <AssociationSet Name="CarRentalDetails" Association="CarRentalModel.CarRentalDetails">
             <End Role="Car" EntitySet="Cars" />
@@ -356,12 +264,12 @@
           </AssociationSet>
           <AssociationSet Name="CarParking" Association="CarRentalModel.CarParking">
             <End Role="Car" EntitySet="Cars" />
-            <End Role="Parking" EntitySet="ParkingItems" />
+            <End Role="Parking" EntitySet="Parking" />
           </AssociationSet>
-          <EntitySet Name="PriceItems" EntityType="CarRentalModel.PriceItem" />
+          <EntitySet Name="PriceList" EntityType="CarRentalModel.PriceItem" />
           <AssociationSet Name="CarPriceItem" Association="CarRentalModel.CarPriceItem">
             <End Role="Car" EntitySet="Cars" />
-            <End Role="PriceItem" EntitySet="PriceItems" />
+            <End Role="PriceItem" EntitySet="PriceList" />
           </AssociationSet>
           <EntitySet Name="AuthInfoes" EntityType="CarRentalModel.AuthInfo" />
           <AssociationSet Name="AuthInfoPersonRole" Association="CarRentalModel.AuthInfoPersonRole">
@@ -372,7 +280,11 @@
             <End Role="Person" EntitySet="People" />
             <End Role="AuthInfo" EntitySet="AuthInfoes" />
           </AssociationSet>
-        </EntityContainer>
+          <AssociationSet Name="PersonRent" Association="CarRentalModel.PersonRent">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Rent" EntitySet="Rents" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="Car">
           <Key>
             <PropertyRef Name="Id" />
@@ -384,16 +296,15 @@
           <NavigationProperty Name="ParkingItem" Relationship="CarRentalModel.CarParking" FromRole="Car" ToRole="Parking" />
           <NavigationProperty Name="PriceItem" Relationship="CarRentalModel.CarPriceItem" FromRole="Car" ToRole="PriceItem" />
         </EntityType>
-        <EntityType Name="Person" Abstract="true">
+        <EntityType Name="Person" Abstract="false">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FirsName" Type="String" Nullable="false" />
           <Property Name="LastName" Type="String" Nullable="false" />
-          <Property Name="Phone" Type="String" Nullable="true" />
-          <Property Name="Address" Type="String" Nullable="true" />
           <NavigationProperty Name="AuthInfo" Relationship="CarRentalModel.PersonAuthInfo" FromRole="Person" ToRole="AuthInfo" />
+          <NavigationProperty Name="Rents" Relationship="CarRentalModel.PersonRent" FromRole="Person" ToRole="Rent" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -411,7 +322,7 @@
           <NavigationProperty Name="Role" Relationship="CarRentalModel.RolePersonRole" FromRole="PersonRole" ToRole="Role" />
           <NavigationProperty Name="AuthInfo" Relationship="CarRentalModel.AuthInfoPersonRole" FromRole="PersonRole" ToRole="AuthInfo" />
         </EntityType>
-        <EntityType Name="CarDetails">
+        <EntityType Name="CarDetail">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -433,14 +344,11 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerId" Type="Int32" Nullable="false" />
-          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
           <Property Name="DateRental" Type="DateTime" Nullable="false" />
-          <NavigationProperty Name="Customer" Relationship="CarRentalModel.CustomerRent" FromRole="Rent" ToRole="Customer" />
-          <NavigationProperty Name="Employee" Relationship="CarRentalModel.EmployeeRent" FromRole="Rent" ToRole="Employee" />
           <NavigationProperty Name="RentalDetails" Relationship="CarRentalModel.RentRentalDetails" FromRole="Rent" ToRole="RentalDetails" />
+          <NavigationProperty Name="Person" Relationship="CarRentalModel.PersonRent" FromRole="Rent" ToRole="Person" />
         </EntityType>
-        <EntityType Name="RentalDetails">
+        <EntityType Name="RentalDetail">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -448,26 +356,11 @@
           <Property Name="Lease" Type="Time" Nullable="false" />
           <NavigationProperty Name="Rent" Relationship="CarRentalModel.RentRentalDetails" FromRole="RentalDetails" ToRole="Rent" />
           <NavigationProperty Name="Car" Relationship="CarRentalModel.CarRentalDetails" FromRole="RentalDetails" ToRole="Car" />
+          <Property Name="CarId" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityType Name="Customer" BaseType="CarRentalModel.Person">
-          <NavigationProperty Name="Rents" Relationship="CarRentalModel.CustomerRent" FromRole="Customer" ToRole="Rent" />
-        </EntityType>
-        <EntityType Name="Employee" BaseType="CarRentalModel.Person">
-          <Property Name="Salary" Nullable="true" Type="Double" />
-          <Property Name="BirthDate" Type="DateTime" Nullable="true" />
-          <NavigationProperty Name="Rents" Relationship="CarRentalModel.EmployeeRent" FromRole="Employee" ToRole="Rent" />
-        </EntityType>
-        <Association Name="CustomerRent">
-          <End Type="CarRentalModel.Customer" Role="Customer" Multiplicity="1" />
-          <End Type="CarRentalModel.Rent" Role="Rent" Multiplicity="*" />
-        </Association>
-        <Association Name="EmployeeRent">
-          <End Type="CarRentalModel.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="CarRentalModel.Rent" Role="Rent" Multiplicity="*" />
-        </Association>
         <Association Name="RentRentalDetails">
           <End Type="CarRentalModel.Rent" Role="Rent" Multiplicity="1" />
-          <End Type="CarRentalModel.RentalDetails" Role="RentalDetails" Multiplicity="*" />
+          <End Type="CarRentalModel.RentalDetail" Role="RentalDetails" Multiplicity="*" />
         </Association>
         <Association Name="RolePersonRole">
           <End Type="CarRentalModel.Role" Role="Role" Multiplicity="1" />
@@ -475,11 +368,11 @@
         </Association>
         <Association Name="CarCarDetails">
           <End Type="CarRentalModel.Car" Role="Car" Multiplicity="1" />
-          <End Type="CarRentalModel.CarDetails" Role="CarDetails" Multiplicity="1" />
+          <End Type="CarRentalModel.CarDetail" Role="CarDetails" Multiplicity="1" />
         </Association>
         <Association Name="CarRentalDetails">
           <End Type="CarRentalModel.Car" Role="Car" Multiplicity="1" />
-          <End Type="CarRentalModel.RentalDetails" Role="RentalDetails" Multiplicity="*" />
+          <End Type="CarRentalModel.RentalDetail" Role="RentalDetails" Multiplicity="*" />
         </Association>
         <Association Name="CarParking">
           <End Type="CarRentalModel.Car" Role="Car" Multiplicity="1" />
@@ -516,6 +409,10 @@
           <End Type="CarRentalModel.Person" Role="Person" Multiplicity="1" />
           <End Type="CarRentalModel.AuthInfo" Role="AuthInfo" Multiplicity="1" />
         </Association>
+        <Association Name="PersonRent">
+          <End Type="CarRentalModel.Person" Role="Person" Multiplicity="1" />
+          <End Type="CarRentalModel.Rent" Role="Rent" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -536,20 +433,6 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="FirsName" ColumnName="FirsName" />
           <ScalarProperty Name="LastName" ColumnName="LastName" />
-          <ScalarProperty Name="Phone" ColumnName="Phone" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
-        </MappingFragment>
-      </EntityTypeMapping>
-      <EntityTypeMapping TypeName="IsTypeOf(CarRentalModel.Customer)">
-        <MappingFragment StoreEntitySet="People_Customer">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-      <EntityTypeMapping TypeName="IsTypeOf(CarRentalModel.Employee)">
-        <MappingFragment StoreEntitySet="People_Employee">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Salary" ColumnName="Salary" />
-          <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -568,15 +451,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="CarDetails1">
-      <EntityTypeMapping TypeName="IsTypeOf(CarRentalModel.CarDetails)">
+    <EntitySetMapping Name="CarDetails">
+      <EntityTypeMapping TypeName="IsTypeOf(CarRentalModel.CarDetail)">
         <MappingFragment StoreEntitySet="CarDetails1">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Color" ColumnName="Color" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ParkingItems">
+    <EntitySetMapping Name="Parking">
       <EntityTypeMapping TypeName="IsTypeOf(CarRentalModel.ParkingItem)">
         <MappingFragment StoreEntitySet="ParkingItems">
           <ScalarProperty Name="Id" ColumnName="Id" />
@@ -588,21 +471,19 @@
       <EntityTypeMapping TypeName="IsTypeOf(CarRentalModel.Rent)">
         <MappingFragment StoreEntitySet="Rents">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
           <ScalarProperty Name="DateRental" ColumnName="DateRental" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="RentalDetails">
-      <EntityTypeMapping TypeName="IsTypeOf(CarRentalModel.RentalDetails)">
+      <EntityTypeMapping TypeName="IsTypeOf(CarRentalModel.RentalDetail)">
         <MappingFragment StoreEntitySet="RentalDetails">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Lease" ColumnName="Lease" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="PriceItems">
+    <EntitySetMapping Name="PriceList">
       <EntityTypeMapping TypeName="IsTypeOf(CarRentalModel.PriceItem)">
         <MappingFragment StoreEntitySet="PriceItems">
           <ScalarProperty Name="Id" ColumnName="Id" />
@@ -620,22 +501,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="CustomerRent" TypeName="CarRentalModel.CustomerRent" StoreEntitySet="Rents">
-      <EndProperty Name="Customer">
-        <ScalarProperty Name="Id" ColumnName="Customer_Id" />
-      </EndProperty>
-      <EndProperty Name="Rent">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="EmployeeRent" TypeName="CarRentalModel.EmployeeRent" StoreEntitySet="Rents">
-      <EndProperty Name="Employee">
-        <ScalarProperty Name="Id" ColumnName="Employee_Id" />
-      </EndProperty>
-      <EndProperty Name="Rent">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
     <AssociationSetMapping Name="RentRentalDetails" TypeName="CarRentalModel.RentRentalDetails" StoreEntitySet="RentalDetails">
       <EndProperty Name="Rent">
         <ScalarProperty Name="Id" ColumnName="Rent_Id" />
@@ -700,7 +565,7 @@
         <ScalarProperty Name="Id" ColumnName="Id" />
       </EndProperty>
     </AssociationSetMapping>
-  </EntityContainerMapping>
+          </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->

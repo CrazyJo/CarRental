@@ -12,14 +12,20 @@ namespace CarRental.Data
     using System;
     using System.Collections.Generic;
     
-    public abstract partial class Person
+    public partial class Person
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Person()
+        {
+            this.Rents = new HashSet<Rent>();
+        }
+    
         public int Id { get; set; }
         public string FirsName { get; set; }
         public string LastName { get; set; }
-        public string Phone { get; set; }
-        public string Address { get; set; }
     
         public virtual AuthInfo AuthInfo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Rent> Rents { get; set; }
     }
 }

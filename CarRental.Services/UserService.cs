@@ -10,15 +10,14 @@ namespace CarRental.Services
 {
     public class UserService
     {
-        public Task CreateCustomer(CustomerDTO user)
+        public Task<RegistrationResult> Register(User user)
         {
             throw new NotImplementedException();
         }
 
-        public Task<SignInStatus> Login(User user)
+        public Task<AuthResult> Login(string userName, string password)
         {
             throw new NotImplementedException();
-
         }
     }
 }

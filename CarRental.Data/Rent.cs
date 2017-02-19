@@ -17,17 +17,14 @@ namespace CarRental.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Rent()
         {
-            this.RentalDetails = new HashSet<RentalDetails>();
+            this.RentalDetails = new HashSet<RentalDetail>();
         }
     
         public int Id { get; set; }
-        public int CustomerId { get; set; }
-        public int EmployeeId { get; set; }
         public System.DateTime DateRental { get; set; }
     
-        public virtual Customer Customer { get; set; }
-        public virtual Employee Employee { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RentalDetails> RentalDetails { get; set; }
+        public virtual ICollection<RentalDetail> RentalDetails { get; set; }
+        public virtual Person Person { get; set; }
     }
 }

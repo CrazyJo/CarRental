@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CarRental.Services</RootNamespace>
     <AssemblyName>CarRental.Services</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,11 +42,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CarService.cs" />
+    <Compile Include="Entities\AuthResult.cs" />
     <Compile Include="Entities\CarDTO.cs" />
     <Compile Include="Entities\CarInfo.cs" />
     <Compile Include="Entities\CustomerDTO.cs" />
+    <Compile Include="Entities\EmployeeDTO.cs" />
+    <Compile Include="Entities\IEntity.cs" />
     <Compile Include="Entities\Order.cs" />
+    <Compile Include="Entities\RegistrationResult.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Infra\Role.cs" />
     <Compile Include="Infra\SignInStatus.cs" />
     <Compile Include="RentalService.cs" />
     <Compile Include="UserService.cs" />

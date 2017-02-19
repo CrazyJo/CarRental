@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CarRental.Services.Entities
 {
-    public class CustomerDTO : User
+    public class EmployeeDTO
     {
     }
 }

@@ -12,12 +12,11 @@ namespace CarRental.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class RentalDetails
+    public partial class CarDetail
     {
         public int Id { get; set; }
-        public System.TimeSpan Lease { get; set; }
+        public string Color { get; set; }
     
-        public virtual Rent Rent { get; set; }
         public virtual Car Car { get; set; }
     }
 }
