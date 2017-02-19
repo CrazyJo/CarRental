@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using AutoMapper;
-using CarRental.Services;
 using CarRental.Services.Entities;
 using CarRental.View.Model;
 
@@ -9,11 +9,11 @@ namespace CarRental.View.Infra
 {
     public class CarsInfoProvider : GridValueProvider<CarInfo, CarInfoViewModel>
     {
-        public CarService CarService { get; set; }
+        public Func<IEnumerable<CarInfo>> CarFactory { get; set; }
 
-        public CarsInfoProvider(CarService carService, DataGridView dataGridView) : base(dataGridView)
+        public CarsInfoProvider(Func<IEnumerable<CarInfo>> carFactory, DataGridView dataGridView) : base(dataGridView)
         {
-            CarService = carService;
+            CarFactory = carFactory;
         }
 
         protected override IEnumerable<CarInfoViewModel> Convert(IEnumerable<CarInfo> domainModel)
@@ -23,7 +23,7 @@ namespace CarRental.View.Infra
 
         protected override IEnumerable<CarInfo> GetDomainModel()
         {
-            return CarService.GetAllAvailableCars();
+            return CarFactory();
         }
     }
 }

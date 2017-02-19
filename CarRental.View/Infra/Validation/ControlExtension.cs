@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Windows.Forms;
-using System.ComponentModel;
+using CarRental.View.Infra.Validation.Shell;
 
-namespace CarRental.View.Infra
+namespace CarRental.View.Infra.Validation
 {
     public static class ControlExtension
     {
@@ -39,5 +35,29 @@ namespace CarRental.View.Infra
             errorLabel.Visible = !res.Valid;
             errorLabel.Text = res.Message;
         }
+
+        public static ValidationUnit PreValid(this Control control, ErrorProvider errorProvider, CancelEventArgs e)
+        {
+            return new ValidationUnit(control, errorProvider, e);
+        }
+
+        public static ValidationUnit Required(this ValidationUnit unit)
+        {
+            var res = unit.Control.Text.Required();
+            if (res.Valid) return unit;
+            unit.SetError(res.Message);
+
+            return unit;
+        }
+
+        public static ValidationUnit Numbers(this ValidationUnit unit)
+        {
+            var res = unit.Control.Text.Numbers();
+            if (res.Valid) return unit;
+            unit.SetError(res.Message);
+
+            return unit;
+        }
+
     }
 }

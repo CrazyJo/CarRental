@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CarRental.View.Shell;
+﻿using CarRental.View.Shell;
 
-namespace CarRental.View.Infra
+namespace CarRental.View.Infra.Validation
 {
     public static class ValidationExtension
     {
@@ -30,5 +25,25 @@ namespace CarRental.View.Infra
             return res;
         }
 
+        public static ValidationResult Required(this string input)
+        {
+            var res = new ValidationResult { Valid = true };
+            if (!string.IsNullOrEmpty(input)) return res;
+            res.Message = "Required";
+            res.Valid = false;
+            return res;
+        }
+
+        public static ValidationResult Numbers(this string input)
+        {
+            var res = new ValidationResult { Valid = true };
+
+            double value;
+            if (double.TryParse(input, out value)) return res;
+
+            res.Message = "Input must contain only numbers";
+            res.Valid = false;
+            return res;
+        }
     }
 }

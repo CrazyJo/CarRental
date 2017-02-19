@@ -14,7 +14,8 @@ namespace CarRental.View.Infra
     {
         public Form Create(AuthResult authResult)
         {
-            return new CustomerForm(new User { Id = 1 }, new CarService(), new RentalService());
+            return new ManagerForm(new User { Id = 1 }, new CarService());
+            //return new CustomerForm(new User { Id = 1 }, new CarService(), new RentalService());
         }
     }
 }

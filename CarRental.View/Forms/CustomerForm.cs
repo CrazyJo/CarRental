@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using CarRental.Services;
 using CarRental.Services.Entities;
 using CarRental.View.Infra;
+using CarRental.View.Infra.Validation;
 using CarRental.View.Model;
 
 namespace CarRental.View.Forms
@@ -13,7 +14,6 @@ namespace CarRental.View.Forms
     public partial class CustomerForm : Form
     {
         public User User { get; set; }
-        public CarService CarService { get; set; }
         public RentalService RentalService { get; set; }
         private bool _validationEnabled;
 
@@ -26,12 +26,11 @@ namespace CarRental.View.Forms
             HideNewOrderControls();
 
             User = user;
-            CarService = carService;
             RentalService = rentalService;
 
-            CarsProvider = new CarsInfoProvider(carService, dataGridView)
+            CarsProvider = new CarsInfoProvider(carService.GetAllAvailableCars, dataGridView)
             {
-                ExcludeColumns = {"Id", "Balance", "TotalCars"}
+                ExcludeColumns = { "Id", "Balance", "TotalCars" }
             };
             OrdersProvider = new OrdersProvider(user, RentalService, dataGridView);
         }
@@ -59,7 +58,7 @@ namespace CarRental.View.Forms
 
         private async void OrderBtn_Click(object sender, EventArgs e)
         {
-            if (!ValidateChildren()) return;
+            if (!ValidateForm()) return;
             try
             {
                 await PostNewOrder();
@@ -71,6 +70,15 @@ namespace CarRental.View.Forms
             SetOrdersInfoData();
             HideNewOrderControls();
             ShowOrdersListControls();
+        }
+
+        private bool ValidateForm()
+        {
+            _validationEnabled = true;
+            errorProvider1.Clear();
+            var res = ValidateChildren();
+            _validationEnabled = false;
+            return res;
         }
 
         private void SetCarsInfoData()
@@ -113,23 +121,26 @@ namespace CarRental.View.Forms
         private void ShowNewOrderControls()
         {
             NewOrderPanel.Visible = true;
-            _validationEnabled = true;
         }
         private void HideNewOrderControls()
         {
             NewOrderPanel.Visible = false;
-            _validationEnabled = false;
+        }
+
+        private bool ShouldValidate()
+        {
+            return !_validationEnabled;
         }
 
         private void HoursTextBox_Validating(object sender, CancelEventArgs e)
         {
-            var input = (TextBox)sender;
-            input.TextBoxValidation(HoursInputError, e);
+            if (ShouldValidate()) return;
+            ((TextBox)sender).PreValid(errorProvider1, e).Numbers().Required();
         }
         private void dataGridView_Validating(object sender, CancelEventArgs e)
         {
-            if (_validationEnabled)
-                dataGridView.GridValidation(ComErrors, e);
+            if (ShouldValidate()) return;
+            dataGridView.GridValidation(ComErrors, e);
         }
     }
 }

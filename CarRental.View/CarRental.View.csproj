@@ -59,7 +59,7 @@
       <DependentUpon>RegistrationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Infra\CarsInfoProvider.cs" />
-    <Compile Include="Infra\ControlExtension.cs" />
+    <Compile Include="Infra\Validation\ControlExtension.cs" />
     <Compile Include="Infra\FormFactory.cs" />
     <Compile Include="Forms\LoginForm.cs">
       <SubType>Form</SubType>
@@ -75,7 +75,8 @@
     </Compile>
     <Compile Include="Infra\GridValueProvider.cs" />
     <Compile Include="Infra\OrdersProvider.cs" />
-    <Compile Include="Infra\ValidationExtension.cs" />
+    <Compile Include="Infra\Validation\Shell\ValidationUnit.cs" />
+    <Compile Include="Infra\Validation\ValidationExtension.cs" />
     <Compile Include="Mappings\AutoMapperConfiguration.cs" />
     <Compile Include="Mappings\DomainToViewModelMappingProfile.cs" />
     <Compile Include="Mappings\ViewModelToDomainMappingProfile.cs" />
@@ -111,6 +112,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\CarRental.View.Forms.ManagerForm.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.LeaseLabel = new System.Windows.Forms.Label();
             this.CreateNewOrderBtn = new System.Windows.Forms.Button();
@@ -38,9 +39,11 @@
             this.ComErrors = new System.Windows.Forms.Label();
             this.HoursInputError = new System.Windows.Forms.Label();
             this.OrdersListPanel = new System.Windows.Forms.Panel();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.NewOrderPanel.SuspendLayout();
             this.OrdersListPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView
@@ -146,6 +149,10 @@
             this.OrdersListPanel.Size = new System.Drawing.Size(367, 100);
             this.OrdersListPanel.TabIndex = 24;
             // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
             // CustomerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -161,6 +168,7 @@
             this.NewOrderPanel.ResumeLayout(false);
             this.NewOrderPanel.PerformLayout();
             this.OrdersListPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -177,6 +185,7 @@
         private System.Windows.Forms.Panel OrdersListPanel;
         private System.Windows.Forms.Label HoursInputError;
         private System.Windows.Forms.Label ComErrors;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }
 
