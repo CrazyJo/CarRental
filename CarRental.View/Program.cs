@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using CarRental.Services;
 using CarRental.View.Mappings;
 
 namespace CarRental.View
@@ -17,6 +15,7 @@ namespace CarRental.View
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            ServiceLayerConfig.Configure();
             AutoMapperConfiguration.Configure();
             Bootstrap.Run();
         }

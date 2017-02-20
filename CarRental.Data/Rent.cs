@@ -22,6 +22,7 @@ namespace CarRental.Data
     
         public int Id { get; set; }
         public System.DateTime DateRental { get; set; }
+        public int PersonId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RentalDetail> RentalDetails { get; set; }

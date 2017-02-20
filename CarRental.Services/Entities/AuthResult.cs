@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CarRental.Services.Infra;
+﻿using CarRental.Services.Infra;
 
 namespace CarRental.Services.Entities
 {

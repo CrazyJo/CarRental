@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,13 +13,13 @@ namespace CarRental.View.Forms
     public partial class CustomerForm : Form
     {
         public User User { get; set; }
-        public RentalService RentalService { get; set; }
+        public IRentalService RentalService { get; set; }
         private bool _validationEnabled;
 
         private GridValueProvider<CarInfo, CarInfoViewModel> CarsProvider { get; }
         private GridValueProvider<Order, OrderViewModel> OrdersProvider { get; }
 
-        public CustomerForm(User user, CarService carService, RentalService rentalService)
+        public CustomerForm(User user, ICarService carService, IRentalService rentalService)
         {
             InitializeComponent();
             HideNewOrderControls();

@@ -17,6 +17,7 @@ namespace CarRental.Data
         public int Id { get; set; }
         public System.TimeSpan Lease { get; set; }
         public int CarId { get; set; }
+        public int RentId { get; set; }
     
         public virtual Rent Rent { get; set; }
         public virtual Car Car { get; set; }

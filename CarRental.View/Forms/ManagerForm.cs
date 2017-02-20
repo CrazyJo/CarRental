@@ -12,11 +12,11 @@ namespace CarRental.View.Forms
     public partial class ManagerForm : Form
     {
         public User Manager { get; set; }
-        public CarService CarService { get; set; }
+        public ICarService CarService { get; set; }
         private GridValueProvider<CarInfo, CarInfoViewModel> CarsProvider { get; }
         private bool _validationEnabled;
 
-        public ManagerForm(User manager, CarService carService)
+        public ManagerForm(User manager, ICarService carService)
         {
             InitializeComponent();
             Manager = manager;
@@ -99,17 +99,17 @@ namespace CarRental.View.Forms
                 .Required();
         }
 
-        private void DataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        private async void DataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             var car = GetSelectedRow(e.RowIndex);
-            CarService.UpdateCar(car);
+            await CarService.UpdateCar(car);
             UpdateGrid();
         }
-        private void RemoveBtn_Click(object sender, EventArgs e)
+        private async void RemoveBtn_Click(object sender, EventArgs e)
         {
             if (DataGridView.SelectedRows.Count != 1) return;
             var carId = (int)DataGridView.SelectedRows[0].Cells["id"].Value;
-            CarService.RemoveCar(carId);
+            await CarService.RemoveCar(carId);
         }
         private void AddBtn_Click(object sender, EventArgs e)
         {

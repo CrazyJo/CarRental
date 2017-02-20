@@ -1,14 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using CarRental.Data;
 using CarRental.Services.Entities;
+using CarRental.Services.Infra;
 
 namespace CarRental.Services
 {
-    public class CarService
+    public interface ICarService
     {
+        IEnumerable<CarInfo> GetAllAvailableCars();
+        IEnumerable<CarInfo> GetAllCars();
+        Task<OperationResult> RemoveCar(int id);
+        Task<OperationResult> AddCar(CarInfo car);
+        Task<OperationResult> UpdateCar(CarInfo car);
+    }
+
+    public class CarService : ICarService
+    {
+        public CarRentalModelContainer Db { get; set; }
+
+        public CarService()
+        {
+            Db = new CarRentalModelContainer();
+        }
+
         public IEnumerable<CarInfo> GetAllAvailableCars()
         {
             return new List<CarInfo>
@@ -60,19 +80,74 @@ namespace CarRental.Services
 
         }
 
-        public void RemoveCar(int id)
+        public async Task<OperationResult> RemoveCar(int id)
         {
+            var res = new OperationResult();
 
+            try
+            {
+                var car = await Db.Cars
+                    .Include(q => q.ParkingItem)
+                    .Include(q => q.RentalDetails)
+                    .FirstOrDefaultAsync(e => e.Id.Equals(id));
+                if (car == null)
+                {
+                    res.Exception = new Exception("There is no such record in the database.");
+                    return res;
+                }
+                //if (!car.RentalDetails.Any())
+                //{
+                //    res.Exception = new Exception("You can not remove the car which is in orders.");
+                //    return res;
+                //}
+                Db.Cars.Remove(car);
+                await Db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                res.Exception = e;
+                return res;
+            }
+
+            return res;
         }
 
-        public void AddCar(CarInfo car)
+        public async Task<OperationResult> AddCar(CarInfo car)
         {
+            var res = new OperationResult();
 
+            try
+            {
+                var dbModel = Mapper.Map<Car>(car);
+                Db.Cars.Add(dbModel);
+                await Db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                res.Exception = e;
+                return res;
+            }
+
+            return res;
         }
 
-        public void UpdateCar(CarInfo car)
+        public async Task<OperationResult> UpdateCar(CarInfo car)
         {
+            var res = new OperationResult();
 
+            try
+            {
+                var dbModel = Mapper.Map<Car>(car);
+                Db.Cars.AddOrUpdate(dbModel);
+                await Db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                res.Exception = e;
+                return res;
+            }
+
+            return res;
         }
     }
 }

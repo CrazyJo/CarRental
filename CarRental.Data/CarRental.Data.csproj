@@ -76,13 +76,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CarRentalModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Configurations\AuthInfoConfiguration.cs" />
+    <Compile Include="DataLayerConfig.cs" />
+    <Compile Include="Initializer\DbInitializer.cs" />
     <Compile Include="ParkingItem.cs">
       <DependentUpon>CarRentalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Person.cs">
-      <DependentUpon>CarRentalModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PersonRole.cs">
       <DependentUpon>CarRentalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="PriceItem.cs">
@@ -96,6 +96,9 @@
       <DependentUpon>CarRentalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Role.cs">
+      <DependentUpon>CarRentalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserRole.cs">
       <DependentUpon>CarRentalModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -126,6 +129,7 @@
       <DependentUpon>CarRentalModel.edmx</DependentUpon>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

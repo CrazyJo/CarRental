@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using CarRental.Data.Configurations;
+
 namespace CarRental.Data
 {
     using System;
@@ -22,13 +24,12 @@ namespace CarRental.Data
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            throw new UnintentionalCodeFirstException();
+            modelBuilder.Configurations.Add(new AuthInfoConfiguration());
         }
     
         public virtual DbSet<Car> Cars { get; set; }
         public virtual DbSet<Person> People { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
-        public virtual DbSet<PersonRole> PersonRoles { get; set; }
         public virtual DbSet<CarDetail> CarDetails { get; set; }
         public virtual DbSet<ParkingItem> Parking { get; set; }
         public virtual DbSet<Rent> Rents { get; set; }

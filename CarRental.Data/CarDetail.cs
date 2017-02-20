@@ -16,6 +16,7 @@ namespace CarRental.Data
     {
         public int Id { get; set; }
         public string Color { get; set; }
+        public int CarId { get; set; }
     
         public virtual Car Car { get; set; }
     }

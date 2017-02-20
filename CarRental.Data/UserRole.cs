@@ -10,13 +10,11 @@
 namespace CarRental.Data
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class PersonRole
+    [Flags]
+    public enum UserRole : int
     {
-        public int Id { get; set; }
-    
-        public virtual Role Role { get; set; }
-        public virtual AuthInfo AuthInfo { get; set; }
+        Customer = 0,
+        Manager = 1
     }
 }

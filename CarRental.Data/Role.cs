@@ -14,16 +14,14 @@ namespace CarRental.Data
     
     public partial class Role
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public int Id { get; set; }
+        public UserRole Name { get; set; }
+
+        public virtual ICollection<AuthInfo> AuthInfo { get; set; }
+
         public Role()
         {
-            this.PersonRoles = new HashSet<PersonRole>();
+            AuthInfo = new HashSet<AuthInfo>();
         }
-    
-        public int Id { get; set; }
-        public string Name { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PersonRole> PersonRoles { get; set; }
     }
 }

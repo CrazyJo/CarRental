@@ -7,7 +7,13 @@ using CarRental.Services.Entities;
 
 namespace CarRental.Services
 {
-    public class RentalService
+    public interface IRentalService
+    {
+        Task CreateOrder(Order order);
+        IEnumerable<Order> GetOrdersById(int userId);
+    }
+
+    public class RentalService : IRentalService
     {
         public Task CreateOrder(Order order)
         {

@@ -4,24 +4,21 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="91db004b41fb4518b013923cc48ee25d" Name="Diagram1" ZoomLevel="83" >
+      <Diagram DiagramId="91db004b41fb4518b013923cc48ee25d" Name="Diagram1" ZoomLevel="75" >
         <EntityTypeShape EntityType="CarRentalModel.Car" Width="1.5" PointX="8.375" PointY="3.125" />
         <EntityTypeShape EntityType="CarRentalModel.Person" Width="1.5" PointX="8.375" PointY="0.5" />
-        <EntityTypeShape EntityType="CarRentalModel.Role" Width="1.5" PointX="2.875" PointY="3.375" />
-        <EntityTypeShape EntityType="CarRentalModel.PersonRole" Width="1.5" PointX="2.875" PointY="0.5" />
+        <EntityTypeShape EntityType="CarRentalModel.Role" Width="1.5" PointX="3.25" PointY="0.5" />
         <EntityTypeShape EntityType="CarRentalModel.CarDetail" Width="1.5" PointX="6" PointY="3.5" />
         <EntityTypeShape EntityType="CarRentalModel.ParkingItem" Width="1.5" PointX="10.375" PointY="5.875" />
         <EntityTypeShape EntityType="CarRentalModel.Rent" Width="1.5" PointX="11" PointY="0.5" />
         <EntityTypeShape EntityType="CarRentalModel.RentalDetail" Width="1.5" PointX="11" PointY="3.375" />
         <AssociationConnector Association="CarRentalModel.RentRentalDetails" />
-        <AssociationConnector Association="CarRentalModel.RolePersonRole" />
         <AssociationConnector Association="CarRentalModel.CarCarDetails" />
         <AssociationConnector Association="CarRentalModel.CarRentalDetails" />
         <AssociationConnector Association="CarRentalModel.CarParking" />
-        <EntityTypeShape EntityType="CarRentalModel.PriceItem" Width="1.5" PointX="8" PointY="6.625" />
+        <EntityTypeShape EntityType="CarRentalModel.PriceItem" Width="1.5" PointX="8" PointY="6.125" />
         <AssociationConnector Association="CarRentalModel.CarPriceItem" />
         <EntityTypeShape EntityType="CarRentalModel.AuthInfo" Width="1.5" PointX="5.625" PointY="0.5" />
-        <AssociationConnector Association="CarRentalModel.AuthInfoPersonRole" />
         <AssociationConnector Association="CarRentalModel.PersonAuthInfo" />
         <AssociationConnector Association="CarRentalModel.PersonRent" />
       </Diagram>

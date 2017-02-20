@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 02/14/2017 18:56:06
+-- Date Created: 02/20/2017 20:46:40
 -- Generated from EDMX file: C:\Users\Philip\Documents\Visual Studio 2015\Projects\CarRental\CarRental.Data\CarRentalModel.edmx
 -- --------------------------------------------------
 
@@ -17,11 +17,68 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[FK_RentRentalDetails]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[RentalDetails] DROP CONSTRAINT [FK_RentRentalDetails];
+GO
+IF OBJECT_ID(N'[dbo].[FK_RolePersonRole]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PersonRoles] DROP CONSTRAINT [FK_RolePersonRole];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CarCarDetails]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Cars] DROP CONSTRAINT [FK_CarCarDetails];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CarRentalDetails]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[RentalDetails] DROP CONSTRAINT [FK_CarRentalDetails];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CarParking]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Cars] DROP CONSTRAINT [FK_CarParking];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CarPriceItem]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Cars] DROP CONSTRAINT [FK_CarPriceItem];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AuthInfoPersonRole]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PersonRoles] DROP CONSTRAINT [FK_AuthInfoPersonRole];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PersonAuthInfo]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[People] DROP CONSTRAINT [FK_PersonAuthInfo];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PersonRent]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Rents] DROP CONSTRAINT [FK_PersonRent];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[Cars]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Cars];
+GO
+IF OBJECT_ID(N'[dbo].[People]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[People];
+GO
+IF OBJECT_ID(N'[dbo].[Roles]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Roles];
+GO
+IF OBJECT_ID(N'[dbo].[PersonRoles]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PersonRoles];
+GO
+IF OBJECT_ID(N'[dbo].[CarDetails]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CarDetails];
+GO
+IF OBJECT_ID(N'[dbo].[Parking]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Parking];
+GO
+IF OBJECT_ID(N'[dbo].[Rents]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Rents];
+GO
+IF OBJECT_ID(N'[dbo].[RentalDetails]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[RentalDetails];
+GO
+IF OBJECT_ID(N'[dbo].[PriceList]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PriceList];
+GO
+IF OBJECT_ID(N'[dbo].[AuthInfoes]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[AuthInfoes];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -42,8 +99,6 @@ CREATE TABLE [dbo].[People] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [FirsName] nvarchar(max)  NOT NULL,
     [LastName] nvarchar(max)  NOT NULL,
-    [Phone] nvarchar(max)  NULL,
-    [Address] nvarchar(max)  NULL,
     [AuthInfo_Id] int  NOT NULL
 );
 GO
@@ -51,40 +106,42 @@ GO
 -- Creating table 'Roles'
 CREATE TABLE [dbo].[Roles] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [Name] nvarchar(max)  NOT NULL
+    [Name] int  NOT NULL
 );
 GO
 
 -- Creating table 'PersonRoles'
 CREATE TABLE [dbo].[PersonRoles] (
-    [Id] int IDENTITY(1,1) NOT NULL,
+    [RoleId] int  NOT NULL,
+    [AuthInfoId] int  NOT NULL,
     [Role_Id] int  NOT NULL,
     [AuthInfo_Id] int  NOT NULL
 );
 GO
 
--- Creating table 'CarDetails1'
-CREATE TABLE [dbo].[CarDetails1] (
+-- Creating table 'CarDetails'
+CREATE TABLE [dbo].[CarDetails] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [Color] nvarchar(max)  NOT NULL
+    [Color] nvarchar(max)  NOT NULL,
+    [CarId] int  NOT NULL
 );
 GO
 
--- Creating table 'ParkingItems'
-CREATE TABLE [dbo].[ParkingItems] (
+-- Creating table 'Parking'
+CREATE TABLE [dbo].[Parking] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [Qty] int  NOT NULL
+    [TotalCars] int  NOT NULL,
+    [Balance] int  NOT NULL,
+    [CarId] int  NOT NULL
 );
 GO
 
 -- Creating table 'Rents'
 CREATE TABLE [dbo].[Rents] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [CustomerId] int  NOT NULL,
-    [EmployeeId] int  NOT NULL,
     [DateRental] datetime  NOT NULL,
-    [Customer_Id] int  NOT NULL,
-    [Employee_Id] int  NOT NULL
+    [PersonId] int  NOT NULL,
+    [Person_Id] int  NOT NULL
 );
 GO
 
@@ -92,17 +149,18 @@ GO
 CREATE TABLE [dbo].[RentalDetails] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Lease] time  NOT NULL,
-    [LineItem] int  NOT NULL,
-    [Qty] int  NOT NULL,
+    [CarId] int  NOT NULL,
+    [RentId] int  NOT NULL,
     [Rent_Id] int  NOT NULL,
     [Car_Id] int  NOT NULL
 );
 GO
 
--- Creating table 'PriceItems'
-CREATE TABLE [dbo].[PriceItems] (
+-- Creating table 'PriceList'
+CREATE TABLE [dbo].[PriceList] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [Price] float  NOT NULL
+    [PricePerHour] float  NOT NULL,
+    [CarId] int  NOT NULL
 );
 GO
 
@@ -110,22 +168,8 @@ GO
 CREATE TABLE [dbo].[AuthInfoes] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [UserName] nvarchar(max)  NOT NULL,
-    [Email] nvarchar(max)  NULL,
-    [PasswordHash] int  NOT NULL
-);
-GO
-
--- Creating table 'People_Customer'
-CREATE TABLE [dbo].[People_Customer] (
-    [Id] int  NOT NULL
-);
-GO
-
--- Creating table 'People_Employee'
-CREATE TABLE [dbo].[People_Employee] (
-    [Salary] float  NULL,
-    [BirthDate] nvarchar(max)  NULL,
-    [Id] int  NOT NULL
+    [Password] nvarchar(max)  NOT NULL,
+    [PersonId] int  NOT NULL
 );
 GO
 
@@ -151,21 +195,21 @@ ADD CONSTRAINT [PK_Roles]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [Id] in table 'PersonRoles'
+-- Creating primary key on [RoleId], [AuthInfoId] in table 'PersonRoles'
 ALTER TABLE [dbo].[PersonRoles]
 ADD CONSTRAINT [PK_PersonRoles]
+    PRIMARY KEY CLUSTERED ([RoleId], [AuthInfoId] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'CarDetails'
+ALTER TABLE [dbo].[CarDetails]
+ADD CONSTRAINT [PK_CarDetails]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [Id] in table 'CarDetails1'
-ALTER TABLE [dbo].[CarDetails1]
-ADD CONSTRAINT [PK_CarDetails1]
-    PRIMARY KEY CLUSTERED ([Id] ASC);
-GO
-
--- Creating primary key on [Id] in table 'ParkingItems'
-ALTER TABLE [dbo].[ParkingItems]
-ADD CONSTRAINT [PK_ParkingItems]
+-- Creating primary key on [Id] in table 'Parking'
+ALTER TABLE [dbo].[Parking]
+ADD CONSTRAINT [PK_Parking]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -181,9 +225,9 @@ ADD CONSTRAINT [PK_RentalDetails]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [Id] in table 'PriceItems'
-ALTER TABLE [dbo].[PriceItems]
-ADD CONSTRAINT [PK_PriceItems]
+-- Creating primary key on [Id] in table 'PriceList'
+ALTER TABLE [dbo].[PriceList]
+ADD CONSTRAINT [PK_PriceList]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -193,51 +237,9 @@ ADD CONSTRAINT [PK_AuthInfoes]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [Id] in table 'People_Customer'
-ALTER TABLE [dbo].[People_Customer]
-ADD CONSTRAINT [PK_People_Customer]
-    PRIMARY KEY CLUSTERED ([Id] ASC);
-GO
-
--- Creating primary key on [Id] in table 'People_Employee'
-ALTER TABLE [dbo].[People_Employee]
-ADD CONSTRAINT [PK_People_Employee]
-    PRIMARY KEY CLUSTERED ([Id] ASC);
-GO
-
 -- --------------------------------------------------
 -- Creating all FOREIGN KEY constraints
 -- --------------------------------------------------
-
--- Creating foreign key on [Customer_Id] in table 'Rents'
-ALTER TABLE [dbo].[Rents]
-ADD CONSTRAINT [FK_CustomerRent]
-    FOREIGN KEY ([Customer_Id])
-    REFERENCES [dbo].[People_Customer]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_CustomerRent'
-CREATE INDEX [IX_FK_CustomerRent]
-ON [dbo].[Rents]
-    ([Customer_Id]);
-GO
-
--- Creating foreign key on [Employee_Id] in table 'Rents'
-ALTER TABLE [dbo].[Rents]
-ADD CONSTRAINT [FK_EmployeeRent]
-    FOREIGN KEY ([Employee_Id])
-    REFERENCES [dbo].[People_Employee]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_EmployeeRent'
-CREATE INDEX [IX_FK_EmployeeRent]
-ON [dbo].[Rents]
-    ([Employee_Id]);
-GO
 
 -- Creating foreign key on [Rent_Id] in table 'RentalDetails'
 ALTER TABLE [dbo].[RentalDetails]
@@ -273,7 +275,7 @@ GO
 ALTER TABLE [dbo].[Cars]
 ADD CONSTRAINT [FK_CarCarDetails]
     FOREIGN KEY ([CarDetails_Id])
-    REFERENCES [dbo].[CarDetails1]
+    REFERENCES [dbo].[CarDetails]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
@@ -303,7 +305,7 @@ GO
 ALTER TABLE [dbo].[Cars]
 ADD CONSTRAINT [FK_CarParking]
     FOREIGN KEY ([ParkingItem_Id])
-    REFERENCES [dbo].[ParkingItems]
+    REFERENCES [dbo].[Parking]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
@@ -318,7 +320,7 @@ GO
 ALTER TABLE [dbo].[Cars]
 ADD CONSTRAINT [FK_CarPriceItem]
     FOREIGN KEY ([PriceItem_Id])
-    REFERENCES [dbo].[PriceItems]
+    REFERENCES [dbo].[PriceList]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
@@ -359,22 +361,19 @@ ON [dbo].[People]
     ([AuthInfo_Id]);
 GO
 
--- Creating foreign key on [Id] in table 'People_Customer'
-ALTER TABLE [dbo].[People_Customer]
-ADD CONSTRAINT [FK_Customer_inherits_Person]
-    FOREIGN KEY ([Id])
+-- Creating foreign key on [Person_Id] in table 'Rents'
+ALTER TABLE [dbo].[Rents]
+ADD CONSTRAINT [FK_PersonRent]
+    FOREIGN KEY ([Person_Id])
     REFERENCES [dbo].[People]
         ([Id])
-    ON DELETE CASCADE ON UPDATE NO ACTION;
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
--- Creating foreign key on [Id] in table 'People_Employee'
-ALTER TABLE [dbo].[People_Employee]
-ADD CONSTRAINT [FK_Employee_inherits_Person]
-    FOREIGN KEY ([Id])
-    REFERENCES [dbo].[People]
-        ([Id])
-    ON DELETE CASCADE ON UPDATE NO ACTION;
+-- Creating non-clustered index for FOREIGN KEY 'FK_PersonRent'
+CREATE INDEX [IX_FK_PersonRent]
+ON [dbo].[Rents]
+    ([Person_Id]);
 GO
 
 -- --------------------------------------------------

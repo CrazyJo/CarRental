@@ -7,26 +7,24 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
 namespace CarRental.Data
 {
-    using System;
-    using System.Collections.Generic;
-    
+
     public partial class AuthInfo
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public AuthInfo()
-        {
-            this.PersonRoles = new HashSet<PersonRole>();
-        }
-    
         public int Id { get; set; }
         public string UserName { get; set; }
-        public string Email { get; set; }
-        public int PasswordHash { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PersonRole> PersonRoles { get; set; }
+        public string Password { get; set; }
+        public int PersonId { get; set; }
+
         public virtual Person Person { get; set; }
+        public virtual ICollection<Role> Role { get; set; }
+
+        public AuthInfo()
+        {
+            Role = new HashSet<Role>();
+        }
     }
 }

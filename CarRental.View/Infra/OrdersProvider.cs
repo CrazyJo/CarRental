@@ -9,10 +9,10 @@ namespace CarRental.View.Infra
 {
     public class OrdersProvider : GridValueProvider<Order, OrderViewModel>
     {
-        public RentalService RentalService { get; set; }
+        public IRentalService RentalService { get; set; }
         public User User { get; set; }
 
-        public OrdersProvider(User user, RentalService rentalService, DataGridView dataGridView) : base(dataGridView)
+        public OrdersProvider(User user, IRentalService rentalService, DataGridView dataGridView) : base(dataGridView)
         {
             User = user;
             RentalService = rentalService;
