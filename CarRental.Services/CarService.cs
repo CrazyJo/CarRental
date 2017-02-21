@@ -31,53 +31,62 @@ namespace CarRental.Services
 
         public IEnumerable<CarInfo> GetAllAvailableCars()
         {
-            return new List<CarInfo>
+            var res = Enumerable.Empty<CarInfo>();
+            try
             {
-                new CarInfo
-                {
-                    Balance = 2,
-                    Car = new CarDTO {Color = "Red", Id = 8, Name = "Mercedes"},
-                    TotalCars = 5,
-                    PricePerHour = 50.7
-                },
-                new CarInfo
-                {
-                    Balance = 1,
-                    Car = new CarDTO {Color = "Blue", Id = 9, Name = "Opel"},
-                    TotalCars = 3,
-                    PricePerHour = 70.15
-                }
-            };
+                var cars = Db.Cars
+                    .Include(r => r.CarDetail)
+                    .Include(r => r.ParkingItem)
+                    .Include(r => r.PriceItem)
+                    .Include(r => r.RentalDetails)
+                    .Where(i => i.RentalDetails.Count > 0).ToList();
+                res = Map(cars);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+            return res;
         }
 
         public IEnumerable<CarInfo> GetAllCars()
         {
-            return new List<CarInfo>
+            IEnumerable<CarInfo> res = Enumerable.Empty<CarInfo>();
+            try
             {
-                new CarInfo
-                {
-                    Balance = 2,
-                    Car = new CarDTO {Color = "Red", Id = 8, Name = "Mercedes"},
-                    TotalCars = 5,
-                    PricePerHour = 50.7
-                },
-                new CarInfo
-                {
-                    Balance = 1,
-                    Car = new CarDTO {Color = "Blue", Id = 9, Name = "Opel"},
-                    TotalCars = 3,
-                    PricePerHour = 70.15
-                },
-                new CarInfo
-                {
-                    Balance = 0,
-                    Car = new CarDTO {Color = "Black", Id = 10, Name = "Audi"},
-                    TotalCars = 3,
-                    PricePerHour = 81.15
-                }
+                var cars = Db.Cars
+                    .Include(r => r.CarDetail)
+                    .Include(r => r.ParkingItem)
+                    .Include(r => r.PriceItem)
+                    .Include(r => r.PriceItem)
+                    .ToList();
+                res = Map(cars);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
 
-            };
+            return res;
+        }
 
+        private IEnumerable<CarInfo> Map(IEnumerable<Car> enumerable)
+        {
+            var res = new List<CarInfo>();
+            foreach (var car in enumerable)
+            {
+                res.Add(new CarInfo
+                {
+                    Car = new CarDTO { Id = car.Id, Name = car.Name, Color = car.CarDetail.Color },
+                    PricePerHour = car.PriceItem.PricePerHour,
+                    Balance = car.ParkingItem.Balance,
+                    TotalCars = car.ParkingItem.TotalCars
+                });
+            }
+            return res;
         }
 
         public async Task<OperationResult> RemoveCar(int id)
@@ -118,8 +127,11 @@ namespace CarRental.Services
 
             try
             {
-                var dbModel = Mapper.Map<Car>(car);
+                var dbModel = Map(car);
                 Db.Cars.Add(dbModel);
+                Db.CarDetails.Add(dbModel.CarDetail);
+                Db.Parking.Add(dbModel.ParkingItem);
+                Db.PriceList.Add(dbModel.PriceItem);
                 await Db.SaveChangesAsync();
             }
             catch (Exception e)
@@ -131,14 +143,28 @@ namespace CarRental.Services
             return res;
         }
 
+        private Car Map(CarInfo car)
+        {
+            return new Car
+            {
+                CarDetail = new CarDetail { Color = car.Car.Color},
+                Name = car.Car.Name,
+                ParkingItem = new ParkingItem { Balance = car.Balance,TotalCars = car.TotalCars},
+                PriceItem = new PriceItem { PricePerHour = car.PricePerHour},
+            };
+        }
+
         public async Task<OperationResult> UpdateCar(CarInfo car)
         {
             var res = new OperationResult();
 
             try
             {
-                var dbModel = Mapper.Map<Car>(car);
+                var dbModel = Map(car);
                 Db.Cars.AddOrUpdate(dbModel);
+                Db.CarDetails.AddOrUpdate(dbModel.CarDetail);
+                Db.Parking.AddOrUpdate(dbModel.ParkingItem);
+                Db.PriceList.AddOrUpdate(dbModel.PriceItem);
                 await Db.SaveChangesAsync();
             }
             catch (Exception e)

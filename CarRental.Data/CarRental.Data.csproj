@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6C46BBF6-6B5E-427D-B669-8246B8EAE679}</ProjectGuid>
+    <ProjectGuid>{477CA6FF-F7D7-41A7-84E0-CF1875474206}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CarRental.Data</RootNamespace>
     <AssemblyName>CarRental.Data</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,8 +41,6 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,84 +49,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthInfo.cs">
-      <DependentUpon>CarRentalModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Car.cs">
-      <DependentUpon>CarRentalModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CarDetail.cs">
-      <DependentUpon>CarRentalModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CarRentalModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CarRentalModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CarRentalModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CarRentalModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CarRentalModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CarRentalModel.edmx</DependentUpon>
-    </Compile>
+    <Compile Include="Configurations\CarConfiguration.cs" />
+    <Compile Include="Configurations\PersonConfiguration.cs" />
+    <Compile Include="Model\AuthInfo.cs" />
+    <Compile Include="Model\Car.cs" />
+    <Compile Include="Model\CarDetail.cs" />
+    <Compile Include="CarRentalModelContainer.cs" />
     <Compile Include="Configurations\AuthInfoConfiguration.cs" />
     <Compile Include="DataLayerConfig.cs" />
     <Compile Include="Initializer\DbInitializer.cs" />
-    <Compile Include="ParkingItem.cs">
-      <DependentUpon>CarRentalModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Person.cs">
-      <DependentUpon>CarRentalModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PriceItem.cs">
-      <DependentUpon>CarRentalModel.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Model\ParkingItem.cs" />
+    <Compile Include="Model\Person.cs" />
+    <Compile Include="Model\PriceItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rent.cs">
-      <DependentUpon>CarRentalModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="RentalDetail.cs">
-      <DependentUpon>CarRentalModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Role.cs">
-      <DependentUpon>CarRentalModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UserRole.cs">
-      <DependentUpon>CarRentalModel.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Model\Rent.cs" />
+    <Compile Include="Model\RentalDetail.cs" />
+    <Compile Include="Model\Role.cs" />
+    <Compile Include="Model\UserRole.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <EntityDeploy Include="CarRentalModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>CarRentalModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="CarRentalModel.edmx.diagram">
-      <DependentUpon>CarRentalModel.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="CarRentalModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CarRentalModel.Context.cs</LastGenOutput>
-      <DependentUpon>CarRentalModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="CarRentalModel.edmx.sql" />
-    <Content Include="CarRentalModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CarRentalModel.cs</LastGenOutput>
-      <DependentUpon>CarRentalModel.edmx</DependentUpon>
-    </Content>
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

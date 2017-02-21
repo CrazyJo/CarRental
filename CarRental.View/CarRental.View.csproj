@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CarRental.View</RootNamespace>
     <AssemblyName>CarRental.View</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -141,7 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CarRental.Data\CarRental.Data.csproj">
-      <Project>{6c46bbf6-6b5e-427d-b669-8246b8eae679}</Project>
+      <Project>{477ca6ff-f7d7-41a7-84e0-cf1875474206}</Project>
       <Name>CarRental.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\CarRental.Services\CarRental.Services.csproj">

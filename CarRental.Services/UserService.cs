@@ -30,11 +30,7 @@ namespace CarRental.Services
             var res = new RegistrationResult();
             try
             {
-                var person = Mapper.Map<Person>(user);
-                //var authInfo = Mapper.Map<AuthInfo>(user);
-                //var role = await Database.Roles.FirstAsync(dbRole => user.Roles.Any(uR => ((int)uR).Equals((int)dbRole.Name)));
-                //var persRole = new PersonRole { AuthInfo = authInfo, Role = role };
-                //person.AuthInfo = authInfo;
+                var person = Map(user);
 
                 Database.People.Add(person);
                 Database.AuthInfoes.Add(person.AuthInfo);
@@ -45,6 +41,17 @@ namespace CarRental.Services
                 res.Exception = e;
             }
             return res;
+        }
+
+        Person Map(User user)
+        {
+            var newP = new Person
+            {
+                FirsName = user.FirstName,
+                LastName = user.LastName,
+                AuthInfo = new AuthInfo {Password = user.Password, UserName = user.UserName}
+            };
+            return newP;
         }
 
         public async Task<AuthResult> Login(string userName, string password)
@@ -61,17 +68,29 @@ namespace CarRental.Services
                     r.Password.Equals(password, StringComparison.CurrentCultureIgnoreCase));
                 if (authInfo == null) return res;
 
-                var domainM = Mapper.Map<User>(authInfo);
+                var domainM = Map(authInfo);
                 res.User = domainM;
                 res.SignInStatus = SignInStatus.Success;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                throw;
             }
 
             return res;
+        }
+
+        private User Map(AuthInfo authInfo)
+        {
+            return new User
+            {
+                FirstName = authInfo.Person.FirsName,
+                LastName = authInfo.Person.LastName,
+                Password = authInfo.Password,
+                UserName = authInfo.UserName,
+                Role = authInfo.Role,
+                Id = authInfo.Id
+            };
         }
     }
 }

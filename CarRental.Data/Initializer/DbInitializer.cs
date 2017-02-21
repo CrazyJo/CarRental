@@ -5,7 +5,7 @@ using System.Data.Entity.Migrations;
 
 namespace CarRental.Data.Initializer
 {
-    public class DbInitializer : CreateDatabaseIfNotExists<CarRentalModelContainer>
+    public class DbInitializer : DropCreateDatabaseAlways<CarRentalModelContainer>
     {
         protected override void Seed(CarRentalModelContainer context)
         {
@@ -18,7 +18,14 @@ namespace CarRental.Data.Initializer
             SeedOrders(context);
             SeedRentalDetails(context);
 
-            context.SaveChanges();
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
             base.Seed(context);
         }
 
@@ -51,21 +58,21 @@ namespace CarRental.Data.Initializer
             var a1 = new AuthInfo
             {
                 Id = 1,
-                PersonId = 1,
+                Person = context.People.Find(1),
                 UserName = "admin",
                 Password = "admin"
             };
             var a2 = new AuthInfo
             {
                 Id = 2,
-                PersonId = 2,
+                Person = context.People.Find(2),
                 UserName = "user2",
                 Password = "user2"
             };
             var a3 = new AuthInfo
             {
                 Id = 3,
-                PersonId = 3,
+                Person = context.People.Find(3),
                 UserName = "user3",
                 Password = "user3"
             };
@@ -73,7 +80,7 @@ namespace CarRental.Data.Initializer
             var r1 = new Role
             {
                 Id = 1,
-                Name = UserRole.Manager                
+                Name = UserRole.Manager
             };
             var r2 = new Role
             {
@@ -119,16 +126,19 @@ namespace CarRental.Data.Initializer
             {
                 new CarDetail
                 {
+                    Id = 1,
                     CarId = 1,
                     Color = "Black"
                 },
                 new CarDetail
                 {
+                    Id = 2,
                     CarId = 2,
                     Color = "Blue"
                 },
                 new CarDetail
                 {
+                    Id = 3,
                     CarId = 3,
                     Color = "Red"
                 }
@@ -140,16 +150,19 @@ namespace CarRental.Data.Initializer
             {
                 new PriceItem
                 {
+                    Id = 1,
                     CarId = 1,
                     PricePerHour = 78.45
                 },
                 new PriceItem
                 {
+                    Id = 2,
                     CarId = 2,
                     PricePerHour = 91.15
                 },
                 new PriceItem
                 {
+                    Id = 3,
                     CarId = 3,
                     PricePerHour = 71.99
                 }
@@ -161,18 +174,21 @@ namespace CarRental.Data.Initializer
             {
                 new ParkingItem
                 {
+                    Id = 1,
                     CarId = 1,
                     Balance = 3,
                     TotalCars = 4
                 },
                 new ParkingItem
                 {
+                    Id = 2,
                     CarId = 2,
                     Balance = 2,
                     TotalCars = 3
                 },
                 new ParkingItem
                 {
+                    Id = 3,
                     CarId = 1,
                     Balance = 2,
                     TotalCars = 2
@@ -186,32 +202,39 @@ namespace CarRental.Data.Initializer
                 new Rent
                 {
                     Id = 1,
-                    PersonId = 2,
+                     Person = context.People.Find(2),
                     DateRental = DateTime.Now.Subtract(new TimeSpan(8, 0, 0))
                 },
                 new Rent
                 {
                     Id = 2,
-                    PersonId = 3,
+                     Person = context.People.Find(3),
                     DateRental = DateTime.Now.Subtract(new TimeSpan(15, 0, 0))
                 }
             });
         }
         void SeedRentalDetails(CarRentalModelContainer context)
         {
+            var r1 = context.Rents.Find(1);
+            var r2 = context.Rents.Find(2);
+            var c1 = context.Cars.Find(1);
+            var c2 = context.Cars.Find(2);
+
             context.RentalDetails.AddRange(new List<RentalDetail>
             {
                 new RentalDetail
                 {
-                    CarId = 1,
-                    RentId = 1,
+                    Id = 1,
+                    Car = c1,
+                    Rent = r1,
                     Lease = new TimeSpan(12, 9, 0)
                 },
                 new RentalDetail
                 {
-                    CarId = 2,
-                    RentId = 2,
-                    Lease = new TimeSpan(30, 8, 0)
+                    Id = 2,
+                    Car = c2,
+                    Rent = r2,
+                    Lease = new TimeSpan(15, 8, 0)
                 }
             });
         }

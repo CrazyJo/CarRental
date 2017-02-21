@@ -11,7 +11,7 @@ namespace CarRental.Services.Mappings
         public DomainToDbModelMappingProfile()
         {
             CreateMap<CarInfo, Car>()
-                .ForMember(dest => dest.CarDetails, opt => opt.MapFrom(src => new CarDetail { Color = src.Car.Color }))
+                .ForMember(dest => dest.CarDetail, opt => opt.ResolveUsing(Converter))
                 .ForMember(dest => dest.ParkingItem, opt => opt.MapFrom(src => new ParkingItem { Balance = src.Balance, TotalCars = src.TotalCars }))
                 .ForMember(dest => dest.PriceItem, opt => opt.MapFrom(src => new PriceItem { PricePerHour = src.PricePerHour }))
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Car.Id))
@@ -19,7 +19,12 @@ namespace CarRental.Services.Mappings
 
             CreateMap<User, Person>()
                 .ForMember(dest => dest.AuthInfo,
-                opt => opt.MapFrom(src => new AuthInfo { UserName = src.UserName, Password = src.Password, Role = src.Roles }));
+                opt => opt.MapFrom(src => new AuthInfo { UserName = src.UserName, Password = src.Password, Role = src.Role }));
+        }
+
+        private static object Converter(CarInfo src)
+        {
+            return new CarDetail {Color = src.Car.Color};
         }
     }
 }

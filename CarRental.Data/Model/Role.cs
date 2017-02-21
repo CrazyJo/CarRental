@@ -7,12 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
 namespace CarRental.Data
 {
-    using System;
-    using System.Collections.Generic;
-    
-    public partial class Role
+    public class Role
     {
         public int Id { get; set; }
         public UserRole Name { get; set; }

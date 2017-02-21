@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace CarRental.Data
 {
     using System;
@@ -14,17 +16,14 @@ namespace CarRental.Data
     
     public partial class Rent
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Rent()
         {
             this.RentalDetails = new HashSet<RentalDetail>();
         }
     
         public int Id { get; set; }
-        public System.DateTime DateRental { get; set; }
-        public int PersonId { get; set; }
+        public DateTime DateRental { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RentalDetail> RentalDetails { get; set; }
         public virtual Person Person { get; set; }
     }

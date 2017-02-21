@@ -15,7 +15,7 @@ namespace CarRental.Data
     public partial class RentalDetail
     {
         public int Id { get; set; }
-        public System.TimeSpan Lease { get; set; }
+        public TimeSpan Lease { get; set; }
         public int CarId { get; set; }
         public int RentId { get; set; }
     

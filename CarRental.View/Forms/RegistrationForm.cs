@@ -41,7 +41,7 @@ namespace CarRental.View.Forms
         {
             if (!ValidateForm()) return;
             var regiModel = RetrieveFormData();
-            regiModel.Roles.Add(new Role { Name = UserRole.Customer });
+            regiModel.Role.Add(new Role { Name = UserRole.Customer });
             var res = await UserService.Register(regiModel);
             if (res.Succeeded)
             {

@@ -110,11 +110,12 @@ namespace CarRental.View.Forms
             if (DataGridView.SelectedRows.Count != 1) return;
             var carId = (int)DataGridView.SelectedRows[0].Cells["id"].Value;
             await CarService.RemoveCar(carId);
+            UpdateGrid();
         }
-        private void AddBtn_Click(object sender, EventArgs e)
+        private async void AddBtn_Click(object sender, EventArgs e)
         {
             if (!ValidateForm()) return;
-            CarService.AddCar(GetFromInput());
+            await CarService.AddCar(GetFromInput());
             UpdateGrid();
         }
     }

@@ -9,6 +9,7 @@ namespace CarRental.Services.Mappings
             Mapper.Initialize(cfg =>
             {
                 cfg.AddProfile<DomainToDbModelMappingProfile>();
+                cfg.AddProfile<DbToDomainModelMappingProfile>();
             });
         }
     }

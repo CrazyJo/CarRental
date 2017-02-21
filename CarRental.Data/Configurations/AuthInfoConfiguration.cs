@@ -6,13 +6,15 @@ namespace CarRental.Data.Configurations
     {
         public AuthInfoConfiguration()
         {
+            HasRequired(r => r.Person).WithRequiredPrincipal(r => r.AuthInfo);
+            
             HasMany(a => a.Role)
                 .WithMany(r => r.AuthInfo)
                 .Map(ar =>
             {
-                ar.MapLeftKey("AuthInfoId");
-                ar.MapRightKey("RoleId");
                 ar.ToTable("AuthInfoRole");
+                ar.MapLeftKey("AuthInfoRefId");
+                ar.MapRightKey("RoleRefId");
             });
         }
     }

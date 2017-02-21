@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Linq;
+using System.Windows.Forms;
 using CarRental.Data;
 using CarRental.Services;
 using CarRental.Services.Entities;
@@ -11,7 +12,7 @@ namespace CarRental.View.Infra
     {
         public Form Create(AuthResult authResult)
         {
-            if (authResult.User.Roles.Contains(new Role { Name = UserRole.Manager }))
+            if (authResult.User.Role.Any(r => r.Name.Equals(UserRole.Manager)))
                 return new ManagerForm(authResult.User, new CarService());
             return new CustomerForm(authResult.User, new CarService(), new RentalService());
         }

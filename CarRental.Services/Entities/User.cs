@@ -7,7 +7,7 @@ namespace CarRental.Services.Entities
     {
         public User()
         {
-            Roles = new HashSet<Role>();
+            Role = new HashSet<Role>();
         }
 
         public int Id { get; set; }
@@ -15,6 +15,6 @@ namespace CarRental.Services.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Password { get; set; }
-        public ICollection<Role> Roles { get; }
+        public ICollection<Role> Role { get; set; }
     }
 }
