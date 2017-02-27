@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CarRental.Services.Entities
+namespace CarRental.Services.Infra
 {
     public class RegistrationResult
     {

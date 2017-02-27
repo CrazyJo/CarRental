@@ -75,9 +75,10 @@
     <Compile Include="Entities\CarDto.cs" />
     <Compile Include="Entities\CarInfo.cs" />
     <Compile Include="Entities\IEntity.cs" />
-    <Compile Include="Entities\OperationResult.cs" />
+    <Compile Include="Infra\OperationDetails.cs" />
+    <Compile Include="Infra\OperationResult.cs" />
     <Compile Include="Entities\OrderDto.cs" />
-    <Compile Include="Entities\RegistrationResult.cs" />
+    <Compile Include="Infra\RegistrationResult.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Infra\SignInStatus.cs" />
     <Compile Include="Mappings\AutoMapperConfiguration.cs" />

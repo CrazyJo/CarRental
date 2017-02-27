@@ -1,92 +1,91 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Threading.Tasks;
-//using CarRental.Data;
-//using CarRental.Services.Entities;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
+using CarRental.Data;
+using CarRental.Services.Entities;
+using System.Data.Entity;
+using CarRental.Services.Infra;
 
-//namespace CarRental.Services
-//{
-//    public interface IOrderService
-//    {
-//        Task CreateOrder(OrderDto orderDto);
-//        IEnumerable<OrderDto> GetOrdersById(int userId);
-//    }
+namespace CarRental.Services
+{
+    public interface IOrderService
+    {
+        Task<OperationDetails> CreateOrder(OrderDto orderDto);
+        Task<OperationResult<IEnumerable<OrderDto>>> GetOrdersById(int userId);
+        Task<OperationResult<IEnumerable<OrderDto>>> GetAllOrders();
+    }
 
-//    public class OrderService : IOrderService
-//    {
-//        public CarRentalModelContainer Db { get; set; }
-//        public OrderService()
-//        {
-//            Db = new CarRentalModelContainer();
-//        }
+    public class OrderService : IOrderService
+    {
+        public CarRentalModelContainer Db { get; set; }
 
-//        public async Task CreateOrder(OrderDto orderDto)
-//        {
-//            try
-//            {
-//                var dbM = Map(orderDto);
+        public OrderService()
+        {
+            Db = new CarRentalModelContainer();
+        }
 
+        public async Task<OperationDetails> CreateOrder(OrderDto orderDto)
+        {
+            var res = new OperationDetails();
 
-//                dbM.Person = Db.People.Find(orderDto.Customer.Id);
-//                dbM.RentalDetails.First().Car =
-//                    Db.Cars.Include(i => i.CarDetail)
-//                        .Include(i => i.ParkingItem)
-//                        .Include(i => i.PriceItem)
-//                        .First(r => r.Id == orderDto.Car.Id);
-//                Db.Rents.Add(dbM);
-//                Db.RentalDetails.AddRange(dbM.RentalDetails);
-//                await Db.SaveChangesAsync();
-//            }
-//            catch (Exception e)
-//            {
-//                Console.WriteLine(e);
-//                throw;
-//            }
-//        }
+            try
+            {
+                var dbM = Mapper.Map<Order>(orderDto);
+                Db.Orders.Add(dbM);
 
-//        Order Map(OrderDto orderDto)
-//        {
-//            return new Order
-//            {
-//                DateRental = orderDto.RentalDate,
-//                RentalDetails = {new RentalDetail
-//                {
-//                    Lease = orderDto.Lease
-//                } }
-//            };
-//        }
+                var t = await Db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                res.Exception = e;
+                return res;
+            }
 
-//        public IEnumerable<OrderDto> GetOrdersById(int userId)
-//        {
-//            var res = Enumerable.Empty<OrderDto>();
-//            var t = Db.CarDetails.Local;
-//            var person = Db.People.Include(r => r.Rents.Select(p => p.RentalDetails.Select(e => e.Car)))
-//                .FirstOrDefault(u => u.Id.Equals(userId));
-//            if (person == null || person.Rents.Count == 0) return res;
-            
-//            return Map(person.Rents);
-//        }
+            return res;
+        }
 
-//        IEnumerable<OrderDto> Map(ICollection<Order> rents)
-//        {
-//            var res = new List<OrderDto>();
+        public async Task<OperationResult<IEnumerable<OrderDto>>> GetOrdersById(int userId)
+        {
+            var res = new OperationResult<IEnumerable<OrderDto>> { Result = Enumerable.Empty<OrderDto>() };
 
-//            foreach (var rent in rents)
-//            {
-//                var rD = rent.RentalDetails.First();
-//                res.Add(new OrderDto { Car = new CarDto
-//                {
-//                    Color = rD.Car.CarDetail.Color,
-//                    Id = rD.Car.Id,
-//                    Name = rD.Car.Name
-//                },
-//                Lease = rD.Lease,
-//                RentalDate = rent.DateRental,
-//                Customer = new User {Id = rent.Person.Id } });
-//            }
+            try
+            {
+                var person = await Db.People.Include(q => q.Orders.Select(r => r.Car))
+                    .FirstOrDefaultAsync(u => u.Id.Equals(userId));
+                if (person == null || !person.Orders.Any()) return res;
+                res.Result = Mapper.Map<IEnumerable<OrderDto>>(person.Orders);
+            }
+            catch (Exception e)
+            {
+                res.Exception = e;
+                return res;
+            }
 
-//            return res;
-//        }
-//    }
-//}
+            return res;
+        }
+
+        public async Task<OperationResult<IEnumerable<OrderDto>>> GetAllOrders()
+        {
+            var res = new OperationResult<IEnumerable<OrderDto>> { Result = Enumerable.Empty<OrderDto>() };
+
+            try
+            {
+                var orders = await Db.Orders
+                    .Include(r => r.Person)
+                    .Include(r => r.Car)
+                    .ToListAsync();
+
+                res.Result = Mapper.Map<IEnumerable<OrderDto>>(orders);
+            }
+            catch (Exception e)
+            {
+                res.Exception = e;
+                return res;
+            }
+
+            return res;
+        }
+    }
+}

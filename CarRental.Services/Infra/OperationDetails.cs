@@ -1,17 +1,22 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 
-namespace CarRental.Services.Entities
+namespace CarRental.Services.Infra
 {
-    public class OperationResult
+    public class OperationDetails
     {
         public bool Successful => Exception == null;
         public string OperationName { get; }
         public Exception Exception { get; set; }
 
-        public OperationResult([CallerMemberName] string opName = "")
+        public OperationDetails([CallerMemberName] string opName = "")
         {
             OperationName = opName;
+        }
+
+        public override string ToString()
+        {
+            return Successful ? "Successfully" : "Faulted";
         }
     }
 }

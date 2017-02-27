@@ -6,5 +6,6 @@
         public int Balance { get; set; }
         public int TotalCars { get; set; }
         public double PricePerHour { get; set; }
+        public bool IsInOrder { get; set; }
     }
 }

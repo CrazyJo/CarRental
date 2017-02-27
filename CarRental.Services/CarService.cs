@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CarRental.Data;
 using CarRental.Services.Entities;
+using CarRental.Services.Infra;
 
 namespace CarRental.Services
 {
@@ -14,9 +15,10 @@ namespace CarRental.Services
     {
         Task<IEnumerable<CarInfo>> GetAllAvailableCars();
         Task<IEnumerable<CarInfo>> GetAllCars();
-        Task<OperationResult> RemoveCar(int id);
-        Task<OperationResult> AddCar(CarInfo car);
-        Task<OperationResult> UpdateCar(CarInfo car);
+        Task<OperationDetails> RemoveCar(int id);
+        Task<OperationDetails> AddCar(CarInfo car);
+        Task<OperationDetails> UpdateCar(CarInfo car);
+        Task<OperationResult<CarInfo>> GetById(int id);
     }
 
     public class CarService : ICarService
@@ -71,9 +73,9 @@ namespace CarRental.Services
             return res;
         }
 
-        public async Task<OperationResult> RemoveCar(int id)
+        public async Task<OperationDetails> RemoveCar(int id)
         {
-            var res = new OperationResult();
+            var res = new OperationDetails();
 
             try
             {
@@ -103,14 +105,14 @@ namespace CarRental.Services
             return res;
         }
 
-        public async Task<OperationResult> AddCar(CarInfo car)
+        public async Task<OperationDetails> AddCar(CarInfo car)
         {
             return await AddOrUpdateCar(car);
         }
 
-        private async Task<OperationResult> AddOrUpdateCar(CarInfo car)
+        private async Task<OperationDetails> AddOrUpdateCar(CarInfo car)
         {
-            var res = new OperationResult();
+            var res = new OperationDetails();
 
             try
             {
@@ -129,9 +131,27 @@ namespace CarRental.Services
             return res;
         }
 
-        public async Task<OperationResult> UpdateCar(CarInfo car)
+        public async Task<OperationDetails> UpdateCar(CarInfo car)
         {
             return await AddOrUpdateCar(car);
+        }
+
+        public async Task<OperationResult<CarInfo>> GetById(int id)
+        {
+            var res = new OperationResult<CarInfo>();
+
+            try
+            {
+                var dbM = await Db.Cars.FindAsync(id);
+                res.Result = Mapper.Map<CarInfo>(dbM);
+            }
+            catch (Exception e)
+            {
+                res.Exception = e;
+                return res;
+            }
+
+            return res;
         }
     }
 }
