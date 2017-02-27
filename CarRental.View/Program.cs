@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using CarRental.Services;
+using CarRental.Services.Config;
 using CarRental.View.Mappings;
 
 namespace CarRental.View

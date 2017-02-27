@@ -6,7 +6,7 @@ namespace CarRental.Data.Configurations
     {
         public CarConfiguration()
         {
-            HasRequired(r => r.CarDetail).WithRequiredPrincipal(r => r.Car).WillCascadeOnDelete(true);
+            HasMany(r => r.Orders).WithRequired(r => r.Car).WillCascadeOnDelete(false);
             HasRequired(r => r.ParkingItem).WithRequiredPrincipal(r => r.Car).WillCascadeOnDelete(true);
             HasRequired(r => r.PriceItem).WithRequiredPrincipal(r => r.Car).WillCascadeOnDelete(true);
         }

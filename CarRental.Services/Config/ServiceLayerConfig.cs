@@ -1,7 +1,7 @@
 ﻿using CarRental.Data;
 using CarRental.Services.Mappings;
 
-namespace CarRental.Services
+namespace CarRental.Services.Config
 {
     public static class ServiceLayerConfig
     {

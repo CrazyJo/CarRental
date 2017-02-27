@@ -12,7 +12,7 @@ namespace CarRental.View.Mappings
                 .ForMember(dest => dest.Model, opt => opt.MapFrom(src => src.Car.Name))
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Car.Id))
                 .ForMember(dest => dest.Color, opt => opt.MapFrom(src => src.Car.Color));
-            CreateMap<Order, OrderViewModel>()
+            CreateMap<OrderDto, OrderViewModel>()
                 .ForMember(dest => dest.CarModel, opt => opt.MapFrom(src => src.Car.Name));
         }
     }

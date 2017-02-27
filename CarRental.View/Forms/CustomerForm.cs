@@ -13,25 +13,25 @@ namespace CarRental.View.Forms
     public partial class CustomerForm : Form
     {
         public User User { get; set; }
-        public IRentalService RentalService { get; set; }
+        public IOrderService OrderService { get; set; }
         private bool _validationEnabled;
 
         private GridValueProvider<CarInfo, CarInfoViewModel> CarsProvider { get; }
-        private GridValueProvider<Order, OrderViewModel> OrdersProvider { get; }
+        private GridValueProvider<OrderDto, OrderViewModel> OrdersProvider { get; }
 
-        public CustomerForm(User user, ICarService carService, IRentalService rentalService)
+        public CustomerForm(User user, ICarService carService, IOrderService orderService)
         {
             InitializeComponent();
             HideNewOrderControls();
 
             User = user;
-            RentalService = rentalService;
+            OrderService = orderService;
 
             CarsProvider = new CarsInfoProvider(carService.GetAllAvailableCars, dataGridView)
             {
                 ExcludeColumns = { "Id", "Balance", "TotalCars" }
             };
-            OrdersProvider = new OrdersProvider(user, RentalService, dataGridView);
+            OrdersProvider = new OrdersProvider(user, OrderService, dataGridView);
         }
 
         private void CustomerForm_Load(object sender, EventArgs e)
@@ -91,17 +91,17 @@ namespace CarRental.View.Forms
 
         private async Task PostNewOrder()
         {
-            Order order = GetInputsData();
-            order.Customer = User;
-            order.RentalDate = DateTime.Now;
-            await RentalService.CreateOrder(order);
+            OrderDto orderDto = GetInputsData();
+            orderDto.Customer = User;
+            orderDto.RentalDate = DateTime.Now;
+            await OrderService.CreateOrder(orderDto);
         }
-        private Order GetInputsData()
+        private OrderDto GetInputsData()
         {
             var selectedRow = dataGridView.SelectedRows[0];
-            var res = new Order();
+            var res = new OrderDto();
             var id = (int)selectedRow.Cells["id"].Value;
-            res.Car = new CarDTO(id);
+            res.Car = new CarDto(id);
             int hours = int.Parse(HoursTextBox.Text);
             res.Lease = new TimeSpan(hours, 0, 0);
 

@@ -9,17 +9,15 @@ namespace CarRental.Data.Initializer
     {
         protected override void Seed(CarRentalModelContainer context)
         {
-            SeedUsers(context);
-            SeedAuthInfoRole(context);
-            SeedCars(context);
-            SeddCarDetails(context);
-            SeedPriceList(context);
-            SeedParking(context);
-            SeedOrders(context);
-            SeedRentalDetails(context);
-
             try
             {
+                SeedUsers(context);
+                SeedAuthInfoRole(context);
+                SeedCars(context);
+                SeedPriceList(context);
+                SeedParking(context);
+                SeedOrders(context);
+
                 context.SaveChanges();
             }
             catch (Exception e)
@@ -106,40 +104,19 @@ namespace CarRental.Data.Initializer
                 new Car
                 {
                     Id = 1,
-                    Name = "Mercedes S500"
+                    Name = "Mercedes S500",
+                    Color = "Black"
                 },
                 new Car
                 {
                     Id=2,
-                    Name = "Audi A4"
+                    Name = "Audi A4",
+                    Color = "Blue"
                 },
                 new Car
                 {
                     Id=3,
-                    Name = "BMV M3"
-                }
-            });
-        }
-        void SeddCarDetails(CarRentalModelContainer context)
-        {
-            context.CarDetails.AddRange(new List<CarDetail>
-            {
-                new CarDetail
-                {
-                    Id = 1,
-                    CarId = 1,
-                    Color = "Black"
-                },
-                new CarDetail
-                {
-                    Id = 2,
-                    CarId = 2,
-                    Color = "Blue"
-                },
-                new CarDetail
-                {
-                    Id = 3,
-                    CarId = 3,
+                    Name = "BMV M3",
                     Color = "Red"
                 }
             });
@@ -189,7 +166,7 @@ namespace CarRental.Data.Initializer
                 new ParkingItem
                 {
                     Id = 3,
-                    CarId = 1,
+                    CarId = 3,
                     Balance = 2,
                     TotalCars = 2
                 }
@@ -197,43 +174,23 @@ namespace CarRental.Data.Initializer
         }
         void SeedOrders(CarRentalModelContainer context)
         {
-            context.Rents.AddRange(new List<Rent>
+            context.Orders.AddRange(new List<Order>
             {
-                new Rent
+                new Order
                 {
                     Id = 1,
-                     Person = context.People.Find(2),
-                    DateRental = DateTime.Now.Subtract(new TimeSpan(8, 0, 0))
-                },
-                new Rent
-                {
-                    Id = 2,
-                     Person = context.People.Find(3),
-                    DateRental = DateTime.Now.Subtract(new TimeSpan(15, 0, 0))
-                }
-            });
-        }
-        void SeedRentalDetails(CarRentalModelContainer context)
-        {
-            var r1 = context.Rents.Find(1);
-            var r2 = context.Rents.Find(2);
-            var c1 = context.Cars.Find(1);
-            var c2 = context.Cars.Find(2);
-
-            context.RentalDetails.AddRange(new List<RentalDetail>
-            {
-                new RentalDetail
-                {
-                    Id = 1,
-                    Car = c1,
-                    Rent = r1,
+                    PersonId = 2,
+                    CarId = 1,
+                    DateRental = DateTime.Now.Subtract(new TimeSpan(8, 0, 0)),
                     Lease = new TimeSpan(12, 9, 0)
+
                 },
-                new RentalDetail
+                new Order
                 {
                     Id = 2,
-                    Car = c2,
-                    Rent = r2,
+                    PersonId = 3,
+                    CarId = 2,
+                    DateRental = DateTime.Now.Subtract(new TimeSpan(15, 0, 0)),
                     Lease = new TimeSpan(15, 8, 0)
                 }
             });

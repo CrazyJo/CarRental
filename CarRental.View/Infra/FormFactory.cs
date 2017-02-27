@@ -14,7 +14,7 @@ namespace CarRental.View.Infra
         {
             if (authResult.User.Role.Any(r => r.Name.Equals(UserRole.Manager)))
                 return new ManagerForm(authResult.User, new CarService());
-            return new CustomerForm(authResult.User, new CarService(), new RentalService());
+            return new CustomerForm(authResult.User, new CarService(), new OrderService());
         }
     }
 }

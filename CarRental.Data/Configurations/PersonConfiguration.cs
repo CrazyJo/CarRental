@@ -7,7 +7,7 @@ namespace CarRental.Data.Configurations
     {
         public PersonConfiguration()
         {
-            HasMany(r => r.Rents).WithRequired(r => r.Person);
+            HasMany(r => r.Orders).WithRequired(r => r.Person).WillCascadeOnDelete(false);
         }
     }
 }

@@ -34,7 +34,7 @@ namespace CarRental.View.Forms
         }
         private CarInfo GetFromInput()
         {
-            var carInfo = new CarInfo { Car = new CarDTO() };
+            var carInfo = new CarInfo { Car = new CarDto() };
             carInfo.Car.Name = ModelTb.Text;
             carInfo.Car.Color = ColorTb.Text;
             carInfo.Balance = int.Parse(BalanceTb.Text);
@@ -57,7 +57,7 @@ namespace CarRental.View.Forms
         }
         private CarInfo GetSelectedRow(int rowIndex)
         {
-            var res = new CarInfo { Car = new CarDTO() };
+            var res = new CarInfo { Car = new CarDto() };
             var cells = DataGridView.Rows[rowIndex].Cells;
             res.Car.Name = (string)cells["Model"].Value;
             res.Car.Color = (string)cells["Color"].Value;

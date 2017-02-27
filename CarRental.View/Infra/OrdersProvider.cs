@@ -7,25 +7,25 @@ using CarRental.View.Model;
 
 namespace CarRental.View.Infra
 {
-    public class OrdersProvider : GridValueProvider<Order, OrderViewModel>
+    public class OrdersProvider : GridValueProvider<OrderDto, OrderViewModel>
     {
-        public IRentalService RentalService { get; set; }
+        public IOrderService OrderService { get; set; }
         public User User { get; set; }
 
-        public OrdersProvider(User user, IRentalService rentalService, DataGridView dataGridView) : base(dataGridView)
+        public OrdersProvider(User user, IOrderService orderService, DataGridView dataGridView) : base(dataGridView)
         {
             User = user;
-            RentalService = rentalService;
+            OrderService = orderService;
         }
 
-        protected override IEnumerable<OrderViewModel> Convert(IEnumerable<Order> domainModel)
+        protected override IEnumerable<OrderViewModel> Convert(IEnumerable<OrderDto> domainModel)
         {
             return Mapper.Map<IEnumerable<OrderViewModel>>(domainModel);
         }
 
-        protected override IEnumerable<Order> GetDomainModel()
+        protected override IEnumerable<OrderDto> GetDomainModel()
         {
-            return RentalService.GetOrdersById(User.Id);
+            return OrderService.GetOrdersById(User.Id);
         }
     }
 }
