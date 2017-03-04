@@ -8,12 +8,14 @@ using CarRental.View.Model;
 
 namespace CarRental.View.Infra
 {
-    public class OrdersProvider : GridValueProvider<OrderDto, OrderViewModel>
+    public class UserOrdersProvider : GridValueProvider<OrderDto, OrderViewModel>
     {
         public IOrderService OrderService { get; set; }
+        public User User { get; set; }
 
-        public OrdersProvider(IOrderService orderService, DataGridView dataGridView) : base(dataGridView)
+        public UserOrdersProvider(User user, IOrderService orderService, DataGridView dataGridView) : base(dataGridView)
         {
+            User = user;
             OrderService = orderService;
         }
 
@@ -24,7 +26,7 @@ namespace CarRental.View.Infra
 
         protected override async Task<IEnumerable<OrderDto>> GetDomainModel()
         {
-            var opDet = await OrderService.GetAllOrders();
+            var opDet = await OrderService.GetOrdersById(User.Id);
             return opDet.Successful ? opDet.Result : null;
         }
     }

@@ -31,7 +31,7 @@ namespace CarRental.View.Forms
             {
                 ExcludeColumns = { "Id", "Balance", "TotalCars" }
             };
-            OrdersProvider = new OrdersProvider(user, OrderService, dataGridView);
+            OrdersProvider = new UserOrdersProvider(user, OrderService, dataGridView);
         }
 
         private void CustomerForm_Load(object sender, EventArgs e)

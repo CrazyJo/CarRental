@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using CarRental.Services;
 using CarRental.View.Forms;
@@ -14,12 +10,20 @@ namespace CarRental.View
     {
         public static void Run()
         {
-            var lgf = new LoginForm(new UserService());
-            lgf.ShowDialog();
+            try
+            {
+                var lgf = new LoginForm(new UserService());
+                lgf.ShowDialog();
 
-            if (!lgf.AuthResult.LogIn) return;
-            var form = new FormFactory().Create(lgf.AuthResult);
-            Application.Run(form);
+                if (!lgf.AuthResult.LogIn) return;
+                var form = new FormFactory().Create(lgf.AuthResult);
+                Application.Run(form);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }
 }

@@ -68,6 +68,8 @@
       <DependentUpon>RegistrationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Infra\CarsInfoProvider.cs" />
+    <Compile Include="Infra\OrdersProvider.cs" />
+    <Compile Include="Infra\UsersProvider.cs" />
     <Compile Include="Infra\Validation\ControlExtension.cs" />
     <Compile Include="Infra\FormFactory.cs" />
     <Compile Include="Forms\LoginForm.cs">
@@ -83,7 +85,7 @@
       <DependentUpon>CustomerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Infra\GridValueProvider.cs" />
-    <Compile Include="Infra\OrdersProvider.cs" />
+    <Compile Include="Infra\UserOrdersProvider.cs" />
     <Compile Include="Infra\Validation\Shell\ValidationUnit.cs" />
     <Compile Include="Infra\Validation\ValidationExtension.cs" />
     <Compile Include="Mappings\AutoMapperConfiguration.cs" />
@@ -92,6 +94,7 @@
     <Compile Include="Model\CarInfoViewModel.cs" />
     <Compile Include="Model\LoginViewModel.cs" />
     <Compile Include="Model\OrderViewModel.cs" />
+    <Compile Include="Model\UserViewModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Forms\ManagerForm.cs">

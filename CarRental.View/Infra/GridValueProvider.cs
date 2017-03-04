@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CarRental.View.Infra
@@ -18,14 +19,18 @@ namespace CarRental.View.Infra
 
         protected GridValueProvider(DataGridView dataGridView)
         {
+            DomainModelEmpty = true;
             DataGridView = dataGridView;
             ExcludeColumns = new List<string>();
         }
 
-        public void SetData()
+        public virtual async Task SetData()
         {
-            IEnumerable<TDomainModel> domainModel = GetDomainModel();
-            DomainModelEmpty = !domainModel.Any();
+            IEnumerable<TDomainModel> domainModel = await GetDomainModel();
+            if (domainModel != null)
+            {
+                DomainModelEmpty = !domainModel.Any();
+            }
             if (DomainModelEmpty)
             {
                 SetDefaultGridData();
@@ -49,7 +54,7 @@ namespace CarRental.View.Infra
 
         protected abstract IEnumerable<TViewModel> Convert(IEnumerable<TDomainModel> domainModel);
 
-        protected abstract IEnumerable<TDomainModel> GetDomainModel();
+        protected abstract Task<IEnumerable<TDomainModel>> GetDomainModel();
 
         private void SetDefaultGridData()
         {

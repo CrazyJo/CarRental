@@ -5,6 +5,7 @@ using System.Data.Entity.Migrations;
 
 namespace CarRental.Data.Initializer
 {
+    //todo: DropCreateDatabaseAlways CreateDatabaseIfNotExists
     public class DbInitializer : DropCreateDatabaseAlways<CarRentalModelContainer>
     {
         protected override void Seed(CarRentalModelContainer context)

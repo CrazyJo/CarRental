@@ -7,7 +7,6 @@ namespace CarRental.Services.Config
     {
         public static void Configure()
         {
-            AutoMapperConfiguration.Configure();
             DataLayerConfig.Configure();
         }
     }

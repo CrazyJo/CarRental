@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CarRental.Services.Mappings;
 
 namespace CarRental.View.Mappings
 {
@@ -10,6 +11,8 @@ namespace CarRental.View.Mappings
             {
                 cfg.AddProfile<ViewModelToDomainMappingProfile>();
                 cfg.AddProfile<DomainToViewModelMappingProfile>();
+                cfg.AddProfile<DomainToDbModelMappingProfile>();
+                cfg.AddProfile<DbToDomainModelMappingProfile>();
             });
         }
     }

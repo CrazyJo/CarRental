@@ -19,6 +19,11 @@ namespace CarRental.Services.Mappings
                 .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.Person.FirsName))
                 .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.Person.LastName));
 
+            CreateMap<Person, User>()
+                .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.AuthInfo.Role))
+                .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.AuthInfo.Password))
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.AuthInfo.UserName));
+
             CreateMap<Car, CarInfo>()
                 .ForMember(dest => dest.Balance, opt => opt.MapFrom(src => src.ParkingItem.Balance))
                 .ForMember(dest => dest.IsInOrder, opt => opt.MapFrom(src => src.Orders.Any()))

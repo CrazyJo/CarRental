@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using AutoMapper;
 using CarRental.Services;
 using CarRental.Services.Entities;
 using CarRental.View.Infra;
@@ -11,27 +14,43 @@ namespace CarRental.View.Forms
 {
     public partial class ManagerForm : Form
     {
-        public User Manager { get; set; }
         public ICarService CarService { get; set; }
         private GridValueProvider<CarInfo, CarInfoViewModel> CarsProvider { get; }
+        private GridValueProvider<OrderDto, OrderViewModel> OrdersProvider { get; }
+        private GridValueProvider<User, UserViewModel> UsersProvider { get; }
         private bool _validationEnabled;
 
-        public ManagerForm(User manager, ICarService carService)
+        public ManagerForm(ICarService carService, IOrderService orderService, IUserService userService)
         {
             InitializeComponent();
-            Manager = manager;
             CarService = carService;
-            CarsProvider = new CarsInfoProvider(carService.GetAllCars, DataGridView)
-            {
-                ExcludeColumns = { "Id" }
-            };
-            UpdateGrid();
+            CarsProvider = new CarsInfoProvider(carService.GetAllCars, DataGridView);
+            OrdersProvider = new OrdersProvider(orderService, OrdersGrid);
+            UsersProvider = new UsersProvider(userService, UsersGrid);
         }
 
-        private void UpdateGrid()
+        private async Task UpdateCarGridBySearchPattern()
         {
-            CarsProvider.SetData();
+            int id;
+            if (!int.TryParse(SearchTb.Text, out id)) return;
+            var operationResult = await CarService.GetById(id);
+            if (!operationResult.Successful || operationResult.Result == null) return;
+            var carsVm = Mapper.Map<CarInfoViewModel>(operationResult.Result);
+            DataGridView.DataSource = new List<CarInfoViewModel> { carsVm };
         }
+        private async Task UpdateCarGrid()
+        {
+            await CarsProvider.SetData();
+        }
+        private async Task UpdateOrderGrid()
+        {
+            await OrdersProvider.SetData();
+        }
+        private async Task UpdateUserGrid()
+        {
+            await UsersProvider.SetData();
+        }
+
         private CarInfo GetFromInput()
         {
             var carInfo = new CarInfo { Car = new CarDto() };
@@ -55,10 +74,18 @@ namespace CarRental.View.Forms
         {
             return !_validationEnabled;
         }
+        private bool ShouldEditRow(int columnIndex, int rowIndex)
+        {
+            var isId = DataGridView.Columns[columnIndex].Name.ToLower().Contains("id");
+            var isCarInOrder = DataGridView.Columns[columnIndex].Name.ToLower().Contains("isinorder");
+            var res = !(isId || isCarInOrder);
+            return res;
+        }
         private CarInfo GetSelectedRow(int rowIndex)
         {
             var res = new CarInfo { Car = new CarDto() };
             var cells = DataGridView.Rows[rowIndex].Cells;
+            res.Car.Id = (int)cells["Id"].Value;
             res.Car.Name = (string)cells["Model"].Value;
             res.Car.Color = (string)cells["Color"].Value;
             res.Balance = (int)cells["Balance"].Value;
@@ -87,7 +114,7 @@ namespace CarRental.View.Forms
         private void TotalCarsTb_Validating(object sender, CancelEventArgs e)
         {
             if (ShouldValidate()) return;
-            ((TextBox) sender).PreValid(errorProvider1, e)
+            ((TextBox)sender).PreValid(errorProvider1, e)
                 .Numbers()
                 .Required();
         }
@@ -99,24 +126,61 @@ namespace CarRental.View.Forms
                 .Required();
         }
 
+        private void DataGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            var t = !ShouldEditRow(e.ColumnIndex, e.RowIndex);
+            e.Cancel = t;
+        }
         private async void DataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             var car = GetSelectedRow(e.RowIndex);
             await CarService.UpdateCar(car);
-            UpdateGrid();
+            await UpdateCarGrid();
         }
         private async void RemoveBtn_Click(object sender, EventArgs e)
         {
             if (DataGridView.SelectedRows.Count != 1) return;
             var carId = (int)DataGridView.SelectedRows[0].Cells["id"].Value;
             await CarService.RemoveCar(carId);
-            UpdateGrid();
+            await UpdateCarGrid();
         }
         private async void AddBtn_Click(object sender, EventArgs e)
         {
             if (!ValidateForm()) return;
             await CarService.AddCar(GetFromInput());
-            UpdateGrid();
+            await UpdateCarGrid();
+        }
+        private async void ManagerForm_Load(object sender, EventArgs e)
+        {
+            await UpdateOrderGrid();
+        }
+
+        private async void tabControl1_Selected(object sender, TabControlEventArgs e)
+        {
+            switch (e.TabPage.Name)
+            {
+                case "UsersPage":
+                    await UpdateUserGrid();
+                    break;
+                case "CarsPage":
+                    await UpdateCarGrid();
+                    break;
+                case "OrdersPage":
+                    await UpdateOrderGrid();
+                    break;
+            }
+        }
+
+        private async void SearchBtn_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(SearchTb.Text))
+            {
+                await UpdateCarGrid();
+            }
+            else
+            {
+                await UpdateCarGridBySearchPattern();
+            }
         }
     }
 }

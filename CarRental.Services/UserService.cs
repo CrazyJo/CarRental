@@ -1,9 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using AutoMapper.Mappers;
 using CarRental.Data;
 using CarRental.Services.Entities;
 using CarRental.Services.Infra;
@@ -14,6 +13,7 @@ namespace CarRental.Services
     {
         Task<RegistrationResult> Register(User user);
         Task<AuthResult> Login(string userName, string password);
+        Task<IEnumerable<User>> GetAll();
     }
 
     public class UserService : IUserService
@@ -49,7 +49,7 @@ namespace CarRental.Services
             {
                 FirsName = user.FirstName,
                 LastName = user.LastName,
-                AuthInfo = new AuthInfo {Password = user.Password, UserName = user.UserName}
+                AuthInfo = new AuthInfo { Password = user.Password, UserName = user.UserName }
             };
             return newP;
         }
@@ -91,6 +91,22 @@ namespace CarRental.Services
                 Role = authInfo.Role,
                 Id = authInfo.Id
             };
+        }
+
+        public async Task<IEnumerable<User>> GetAll()
+        {
+            var dbM = await Database.People.Include(p => p.AuthInfo).ToListAsync();
+            IEnumerable<User> domM;
+            try
+            {
+                domM = Mapper.Map<IEnumerable<User>>(dbM);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            return domM;
         }
     }
 }
